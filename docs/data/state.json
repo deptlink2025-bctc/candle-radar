@@ -11,9 +11,19 @@
   "source": "kingstock"
  },
  "devices": {
-  "n": 0,
-  "source": "none",
+  "n": 1,
+  "source": "fallback",
   "vapid": true,
-  "checked_at": "2026-09-17T18:37:00+07:00"
- }
+  "checked_at": "2026-09-17T18:47:51+07:00"
+ },
+ "welcome": {
+  "at": "2026-09-17T18:47:51+07:00",
+  "sent": 1,
+  "gone": 0,
+  "failed": 0,
+  "errors": []
+ },
+ "known_subs": [
+  "e899d64057db0f26"
+ ]
 }

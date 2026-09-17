@@ -104,15 +104,21 @@ service worker scope khác nên vẫn phải đăng ký mới.
 Tông màu/chữ: nền kem `#F7F4EC`, xanh rêu `#1F3A2E`, thẻ pastel, Archivo + Source Serif 4 italic.
 Logo B "Sao mai": `docs/icons/logo.svg`; PNG sinh bằng `scripts/make_icons.py` (cần Pillow).
 
-## Deploy lần đầu
+## Deploy — đã chạy thật từ 17/09/2026
 
-1. Tạo repo public `deptlink2025-bctc/candle-radar`, push toàn bộ (trừ `venv/`, `.env`).
-2. Settings → Pages → Source: branch `main`, folder `/docs`.
+Đang sống tại `https://deptlink2025-bctc.github.io/candle-radar/`; job `daily` chạy xanh ngay lần đầu
+(quét 39 mã, phiên 17/09, 20 mẫu trên 18 mã), bot commit `docs/data/` bình thường.
+
+Các bước đã làm, ghi lại phòng khi phải dựng lại từ đầu:
+
+1. Tạo repo **public** `deptlink2025-bctc/candle-radar`, push toàn bộ (trừ `venv/`, `.env`).
+   Tên repo phải **viết thường**: đường dẫn GitHub Pages phân biệt hoa/thường.
+2. Settings → Pages → Source `Deploy from a branch`, branch `main`, folder **`/docs`** (không phải root).
 3. `venv\Scripts\python -m job.gen_vapid` → 3 dòng. Dán `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`,
-   `VAPID_SUBJECT` vào Settings → Secrets → Actions. Dán public key vào `docs/config.js` (`VAPID_PUBLIC`), push.
-4. Mở app trên điện thoại → Cài đặt → Bật thông báo → Sao chép → dán vào Secret `PUSH_SUBS_FALLBACK`.
-5. Actions → daily → Run workflow (`test_push=true`) → điện thoại nhận "Thông báo thử". Lần chạy kế
-   sẽ gửi "Đã kết nối" cho máy mới.
+   `VAPID_SUBJECT` vào Settings → Secrets → Actions; dán public key vào `docs/config.js` (`VAPID_PUBLIC`), push.
+4. Mở app trên điện thoại → Cài đặt → Bật thông báo → Sao chép → dán vào Secret `PUSH_SUBS_FALLBACK`
+   (giữ nguyên cả `[` `]` — đó là **danh sách** máy; thêm máy thì nối vào cùng mảng).
+5. Thử ngay không cần GitHub: `PUSH_SUBS_FALLBACK='[…]' venv\Scripts\python -m job.push --test`.
 
 Nghiệm thu: `docs/data/state.json` có `devices.n = 1`, `last_run`; 15:35 hôm sau `latest.json.trade_date`
 đúng ngày; `workflow_dispatch force=true` vào tối chạy lại không gửi trùng (cùng `trade_date`).

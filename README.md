@@ -1,7 +1,7 @@
-# Candle Radar — cảnh báo 15 mẫu hình nến sau phiên
+# Candle Radar — cảnh báo 18 mẫu hình nến sau phiên
 
 App thứ 7 trong bộ công cụ chứng khoán cá nhân. Mỗi chiều sau ATC, quét 39 mã trong danh mục
-KingStock, nhận dạng 15 mẫu hình nến đảo chiều **trên nến đã chốt**, đẩy thông báo lên điện thoại
+KingStock, nhận dạng 18 mẫu hình nến (15 mẫu đảo chiều cổ điển + 3 mẫu khối lượng) **trên nến đã chốt**, đẩy thông báo lên điện thoại
 và ghi lại để xem trên giao diện tĩnh. Không máy chủ, 0 đồng.
 
 - Giao diện: `https://deptlink2025-bctc.github.io/candle-radar/` (GitHub Pages từ `/docs`)
@@ -39,7 +39,7 @@ venv\Scripts\python -m scripts.replay --days 750 --md > reports/replay-<ngày>.m
 Cách đọc số: MUA và BÁN tách riêng (VN không bán khống); với BÁN, lợi suất âm sau tín hiệu = đúng;
 luôn so với mốc mua-đại trên cùng chuỗi; t > 2 mới đáng để ý; chưa trừ phí, chưa tính T+2.
 
-## 15 mẫu hình (job/patterns.py)
+## 18 mẫu hình (job/patterns.py)
 
 Ký hiệu nến: `body=|c−o|`, `rng=h−l`, `up=h−max(o,c)`, `lo=min(o,c)−l`. `avg_body` = trung bình thân 10 nến
 trước mẫu. Thân lớn = `body ≥ 0,8·avg_body`; thân nhỏ = `body ≤ 0,3·rng`; Doji = `body ≤ 0,1·rng`;
@@ -62,8 +62,26 @@ Búa = thân nhỏ, `lo ≥ 2·body`, `up ≤ 0,1·rng`; Búa ngược = đối 
 | `piercing` | Xuyên thấu | MUA | −2 giảm thân lớn; −1 tăng, `o₋₁ ≤ c₋₂`, `(o₋₂+c₋₂)/2 < c₋₁ < o₋₂` |
 | `dark_cloud` | Mây đen che phủ | BÁN | đối xứng Xuyên thấu |
 | `three_inside_down` | Ba nến trong giảm | BÁN | −3 tăng thân lớn; −2 giảm thân trong thân −3; −1 giảm, `c₋₁ < l₋₂` |
+| `limit_up_climax` | Trần + bùng nổ KL + phá đỉnh | MUA | `c/c₋₁ − 1 ≥ 6,5 %`; tăng; `body ≥ 2·avg_body`; đóng ở 20 % trên biên độ; `v ≥ 2·avg_vol₂₀`; `c > max c 20 phiên` |
+| `limit_down_volume` | Sàn kèm KL bùng nổ (bắt đáy) | MUA | `c/c₋₁ − 1 ≤ −6,5 %`; `v ≥ 2·avg_vol₂₀` |
+| `falling_three_methods` | Ba bước giảm | BÁN | −5 giảm thân lớn; −4..−2 `body ≤ ½·body₋₅`, nằm trong biên −5 (±10 %); −1 giảm, `c₋₁ < c₋₅` |
 
-Ba chỗ cố ý khác với `vn-stock-app/backend/app/indicators/candlestick_patterns.py`:
+**Ba mẫu khối lượng (16–18) thêm 18/09/2026** sau khi đo 17 ứng viên trên toàn bộ lịch sử DNSE (08/2022 → 09/2026,
+[reports/replay-2026-09-18-khoi-luong.md](reports/replay-2026-09-18-khoi-luong.md)). Chúng khác 15 mẫu cổ điển ở hai
+chiều mà nến Nhật không có: **khối lượng** và **biên độ ±7 % của sàn VN** — và đó là hai chiều duy nhất đo ra giá trị ổn định:
+
+- **Trần + bùng nổ KL + phá đỉnh**: 188 lần (3,9/tháng), +2,76 % sau 10 phiên (t 3,2), **thắng mua-đại 5/5 năm** kể cả cú
+  sập 2022. Tách riêng từng điều kiện đều ≈ mua đại; giá trị nằm ở chỗ cả ba cùng xảy ra. Ngưỡng 6,5 % dùng chung cho
+  HOSE/HNX/UPCOM (sàn khác biên rộng hơn nên vẫn qua) — cố ý.
+- **Sàn kèm KL ≥ 2×**: 184 lần, +2,12 %/10p, +5,13 %/20p (60 % đúng) — nhưng 2022 (cú sập) và 2024 (đi ngang) âm ở 10p.
+  Bán tháo kiệt sức chỉ trả tiền khi trùng đáy thật; thẻ cảnh báo ghi rõ "rủi ro cao".
+- **Ba bước giảm**: 750 ngày ra −5,48 % (22 lần) nhưng 4 năm chỉ −0,78 % (56 lần), 2023–2024 sai chiều. Đưa vào để
+  theo dõi, **khuyên tắt** — tắt bằng `patterns_disabled` trong `docs/data/settings.json`.
+
+14 ứng viên còn lại (Ba nến ngoài, Nến trong, Nhíp, Pocket pivot, NR7, Spring, Upthrust, Key reversal, Gap…) đo ra ≈ mua
+đại hoặc sai chiều — script `scripts/measure_extra.py` giữ lại để đo lại được.
+
+Ba chỗ cố ý khác với `vn-stock-app/backend/app/indicators/candlestick_patterns.py` (áp cho 15 mẫu cổ điển):
 
 1. **Không lọc xu hướng (MA), không lọc %K** — theo yêu cầu "mẫu xuất hiện là báo".
 2. **Không đòi gap** ở Sao mai/Sao hôm: nến ngày VN hầu như không gap, điều kiện đó gần như không bao giờ
@@ -83,7 +101,7 @@ Nến nào biên độ 0 (đứng giá, trần/sàn không khớp) → không nh
 4. Mã có nến cuối **cũ hơn** `trade_date` (không khớp lệnh hôm nay) → vào `stale`, **không xét mẫu**.
    Không có bước này, một mẫu cũ của mã kém thanh khoản sẽ được "phát hiện lại" mỗi ngày (bẫy IDP
    ở TuDoanh Radar 16/09/2026).
-5. `detect_at(bars, -1)` cho từng mã → tín hiệu kèm 6 nến cuối để giao diện vẽ mini-chart.
+5. `detect_at(bars, -1)` cho từng mã → tín hiệu kèm 7 nến cuối để giao diện vẽ mini-chart.
 6. Push: một thông báo/mã (`cr-<mã>`, gộp tên mẫu); > `digest_threshold` mã → một thông báo tổng hợp.
    Thứ Hai gửi thêm nhịp tim. Máy mới đăng ký → chào mừng ngay ở đầu job.
 7. Ghi `latest.json` (giao diện đọc), `daily/<ngày>.json`, `state.json`.
@@ -137,7 +155,7 @@ Nghiệm thu: `docs/data/state.json` có `devices.n = 1`, `last_run`; 15:35 hôm
 ## Kiểm thử
 
 ```
-venv\Scripts\python -m pytest tests -q      # 54 test: 15 mẫu dương/âm, bảo vệ, job idempotent, push gộp
+venv\Scripts\python -m pytest tests -q      # 65 test: 18 mẫu dương/âm, bảo vệ, job idempotent, push gộp
 node --check docs/app.js
 ```
 

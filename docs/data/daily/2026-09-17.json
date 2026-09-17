@@ -1,6 +1,6 @@
 {
  "trade_date": "2026-09-17",
- "generated_at": "2026-09-17T17:47:09+07:00",
+ "generated_at": "2026-09-18T00:23:01+07:00",
  "late": false,
  "signals": [
   {
@@ -12,10 +12,19 @@
    "bars": 2,
    "hint": "Nến tăng bao trọn thân nến giảm hôm trước.",
    "advice": "Canh mua phiên sau; dừng lỗ dưới đáy nến nhấn chìm.",
+   "caution": "",
    "price": 12.9,
    "change_pct": 2.38,
    "volume": 336700,
    "candles": [
+    {
+     "d": "2026-09-09",
+     "o": 13.05,
+     "h": 13.1,
+     "l": 12.85,
+     "c": 12.85,
+     "v": 104200
+    },
     {
      "d": "2026-09-10",
      "o": 12.95,
@@ -75,10 +84,19 @@
    "bars": 2,
    "hint": "Nến tăng mở thấp, đóng cửa trên giữa thân nến giảm hôm trước.",
    "advice": "Yếu hơn nhấn chìm — chờ thêm một nến tăng nữa rồi mới vào.",
+   "caution": "",
    "price": 36.7,
    "change_pct": 0.96,
    "volume": 3397000,
    "candles": [
+    {
+     "d": "2026-09-09",
+     "o": 36.2,
+     "h": 36.7,
+     "l": 36.15,
+     "c": 36.4,
+     "v": 2459100
+    },
     {
      "d": "2026-09-10",
      "o": 36.4,
@@ -138,10 +156,19 @@
    "bars": 2,
    "hint": "Nến tăng mở thấp, đóng cửa trên giữa thân nến giảm hôm trước.",
    "advice": "Yếu hơn nhấn chìm — chờ thêm một nến tăng nữa rồi mới vào.",
+   "caution": "",
    "price": 11.8,
    "change_pct": 2.61,
    "volume": 4734900,
    "candles": [
+    {
+     "d": "2026-09-09",
+     "o": 12.9,
+     "h": 13.0,
+     "l": 12.6,
+     "c": 12.6,
+     "v": 3678000
+    },
     {
      "d": "2026-09-10",
      "o": 12.6,
@@ -201,10 +228,19 @@
    "bars": 2,
    "hint": "Nến tăng mở thấp, đóng cửa trên giữa thân nến giảm hôm trước.",
    "advice": "Yếu hơn nhấn chìm — chờ thêm một nến tăng nữa rồi mới vào.",
+   "caution": "",
    "price": 12.85,
    "change_pct": 1.18,
    "volume": 8061900,
    "candles": [
+    {
+     "d": "2026-09-09",
+     "o": 14.4,
+     "h": 14.7,
+     "l": 14.3,
+     "c": 14.35,
+     "v": 7616900
+    },
     {
      "d": "2026-09-10",
      "o": 14.35,
@@ -264,10 +300,19 @@
    "bars": 2,
    "hint": "Nến tăng bao trọn thân nến giảm hôm trước.",
    "advice": "Canh mua phiên sau; dừng lỗ dưới đáy nến nhấn chìm.",
+   "caution": "",
    "price": 10.8,
    "change_pct": 2.37,
    "volume": 14399100,
    "candles": [
+    {
+     "d": "2026-09-09",
+     "o": 11.35,
+     "h": 11.45,
+     "l": 11.1,
+     "c": 11.3,
+     "v": 10703400
+    },
     {
      "d": "2026-09-10",
      "o": 11.2,
@@ -327,10 +372,19 @@
    "bars": 2,
    "hint": "Nến tăng bao trọn thân nến giảm hôm trước.",
    "advice": "Canh mua phiên sau; dừng lỗ dưới đáy nến nhấn chìm.",
+   "caution": "",
    "price": 25.3,
    "change_pct": 1.61,
    "volume": 3614500,
    "candles": [
+    {
+     "d": "2026-09-09",
+     "o": 26.6,
+     "h": 26.7,
+     "l": 26.2,
+     "c": 26.35,
+     "v": 2455500
+    },
     {
      "d": "2026-09-10",
      "o": 26.2,
@@ -390,10 +444,19 @@
    "bars": 2,
    "hint": "Nến tăng bao trọn thân nến giảm hôm trước.",
    "advice": "Canh mua phiên sau; dừng lỗ dưới đáy nến nhấn chìm.",
+   "caution": "",
    "price": 21.2,
    "change_pct": 1.19,
    "volume": 17574100,
    "candles": [
+    {
+     "d": "2026-09-09",
+     "o": 21.9,
+     "h": 22.2,
+     "l": 21.85,
+     "c": 22.05,
+     "v": 22432800
+    },
     {
      "d": "2026-09-10",
      "o": 22.0,
@@ -453,10 +516,19 @@
    "bars": 2,
    "hint": "Nến tăng mở thấp, đóng cửa trên giữa thân nến giảm hôm trước.",
    "advice": "Yếu hơn nhấn chìm — chờ thêm một nến tăng nữa rồi mới vào.",
+   "caution": "",
    "price": 47.5,
    "change_pct": 2.04,
    "volume": 2877200,
    "candles": [
+    {
+     "d": "2026-09-09",
+     "o": 49.15,
+     "h": 49.2,
+     "l": 48.05,
+     "c": 48.15,
+     "v": 2145700
+    },
     {
      "d": "2026-09-10",
      "o": 48.15,
@@ -516,10 +588,19 @@
    "bars": 2,
    "hint": "Nến tăng bao trọn thân nến giảm hôm trước.",
    "advice": "Canh mua phiên sau; dừng lỗ dưới đáy nến nhấn chìm.",
+   "caution": "",
    "price": 16.8,
    "change_pct": 2.44,
    "volume": 3397200,
    "candles": [
+    {
+     "d": "2026-09-09",
+     "o": 17.4,
+     "h": 17.4,
+     "l": 17.1,
+     "c": 17.1,
+     "v": 2206500
+    },
     {
      "d": "2026-09-10",
      "o": 17.0,
@@ -579,10 +660,19 @@
    "bars": 2,
    "hint": "Nến búa hôm trước, hôm nay nến tăng đóng cửa vượt đỉnh búa.",
    "advice": "Canh mua phiên sau; điểm dừng lỗ tự nhiên là đáy râu búa.",
+   "caution": "",
    "price": 12.9,
    "change_pct": 0.39,
    "volume": 2672500,
    "candles": [
+    {
+     "d": "2026-09-09",
+     "o": 13.1,
+     "h": 13.15,
+     "l": 12.9,
+     "c": 12.9,
+     "v": 2260700
+    },
     {
      "d": "2026-09-10",
      "o": 12.85,
@@ -642,10 +732,19 @@
    "bars": 2,
    "hint": "Nến tăng bao trọn thân nến giảm hôm trước.",
    "advice": "Canh mua phiên sau; dừng lỗ dưới đáy nến nhấn chìm.",
+   "caution": "",
    "price": 14.3,
    "change_pct": 2.14,
    "volume": 11920800,
    "candles": [
+    {
+     "d": "2026-09-09",
+     "o": 15.2,
+     "h": 15.2,
+     "l": 14.8,
+     "c": 14.9,
+     "v": 6441600
+    },
     {
      "d": "2026-09-10",
      "o": 15.0,
@@ -705,10 +804,19 @@
    "bars": 2,
    "hint": "Nến tăng bao trọn thân nến giảm hôm trước.",
    "advice": "Canh mua phiên sau; dừng lỗ dưới đáy nến nhấn chìm.",
+   "caution": "",
    "price": 21.15,
    "change_pct": 2.92,
    "volume": 40967600,
    "candles": [
+    {
+     "d": "2026-09-09",
+     "o": 21.05,
+     "h": 21.15,
+     "l": 20.85,
+     "c": 20.9,
+     "v": 9488000
+    },
     {
      "d": "2026-09-10",
      "o": 20.85,
@@ -768,10 +876,19 @@
    "bars": 2,
    "hint": "Nến búa hôm trước, hôm nay nến tăng đóng cửa vượt đỉnh búa.",
    "advice": "Canh mua phiên sau; điểm dừng lỗ tự nhiên là đáy râu búa.",
+   "caution": "",
    "price": 21.15,
    "change_pct": 2.92,
    "volume": 40967600,
    "candles": [
+    {
+     "d": "2026-09-09",
+     "o": 21.05,
+     "h": 21.15,
+     "l": 20.85,
+     "c": 20.9,
+     "v": 9488000
+    },
     {
      "d": "2026-09-10",
      "o": 20.85,
@@ -831,10 +948,19 @@
    "bars": 2,
    "hint": "Nến búa hôm trước, hôm nay nến tăng đóng cửa vượt đỉnh búa.",
    "advice": "Canh mua phiên sau; điểm dừng lỗ tự nhiên là đáy râu búa.",
+   "caution": "",
    "price": 32.65,
    "change_pct": 0.62,
    "volume": 12488900,
    "candles": [
+    {
+     "d": "2026-09-09",
+     "o": 32.0,
+     "h": 32.7,
+     "l": 32.0,
+     "c": 32.4,
+     "v": 10974600
+    },
     {
      "d": "2026-09-10",
      "o": 32.2,
@@ -894,10 +1020,19 @@
    "bars": 2,
    "hint": "Nến tăng bao trọn thân nến giảm hôm trước.",
    "advice": "Canh mua phiên sau; dừng lỗ dưới đáy nến nhấn chìm.",
+   "caution": "",
    "price": 11.7,
    "change_pct": 3.54,
    "volume": 5531800,
    "candles": [
+    {
+     "d": "2026-09-09",
+     "o": 12.15,
+     "h": 12.4,
+     "l": 12.05,
+     "c": 12.2,
+     "v": 4808600
+    },
     {
      "d": "2026-09-10",
      "o": 12.2,
@@ -957,10 +1092,19 @@
    "bars": 2,
    "hint": "Nến tăng bao trọn thân nến giảm hôm trước.",
    "advice": "Canh mua phiên sau; dừng lỗ dưới đáy nến nhấn chìm.",
+   "caution": "",
    "price": 20.0,
    "change_pct": 3.9,
    "volume": 18343400,
    "candles": [
+    {
+     "d": "2026-09-09",
+     "o": 21.7,
+     "h": 21.75,
+     "l": 21.2,
+     "c": 21.2,
+     "v": 7442100
+    },
     {
      "d": "2026-09-10",
      "o": 21.1,
@@ -1020,10 +1164,19 @@
    "bars": 2,
    "hint": "Nến tăng bao trọn thân nến giảm hôm trước.",
    "advice": "Canh mua phiên sau; dừng lỗ dưới đáy nến nhấn chìm.",
+   "caution": "",
    "price": 28.2,
    "change_pct": 2.17,
    "volume": 31764100,
    "candles": [
+    {
+     "d": "2026-09-09",
+     "o": 27.35,
+     "h": 27.55,
+     "l": 27.25,
+     "c": 27.4,
+     "v": 11247800
+    },
     {
      "d": "2026-09-10",
      "o": 27.3,
@@ -1083,10 +1236,19 @@
    "bars": 3,
    "hint": "Tăng mạnh → do dự → giảm, nến xác nhận đóng dưới giữa thân nến tăng.",
    "advice": "Đang giữ thì cân nhắc chốt bớt; đỉnh nến giữa là mốc vô hiệu.",
+   "caution": "",
    "price": 19.25,
    "change_pct": -2.28,
    "volume": 9521800,
    "candles": [
+    {
+     "d": "2026-09-09",
+     "o": 18.85,
+     "h": 19.2,
+     "l": 18.6,
+     "c": 18.65,
+     "v": 3488900
+    },
     {
      "d": "2026-09-10",
      "o": 18.8,
@@ -1146,10 +1308,19 @@
    "bars": 2,
    "hint": "Nến râu trên dài ở vùng cao, hôm nay nến giảm đóng cửa thủng đáy nó.",
    "advice": "Đang giữ thì cân nhắc thoát; đỉnh râu sao băng là mốc vô hiệu.",
+   "caution": "",
    "price": 19.25,
    "change_pct": -2.28,
    "volume": 9521800,
    "candles": [
+    {
+     "d": "2026-09-09",
+     "o": 18.85,
+     "h": 19.2,
+     "l": 18.6,
+     "c": 18.65,
+     "v": 3488900
+    },
     {
      "d": "2026-09-10",
      "o": 18.8,
@@ -1209,10 +1380,19 @@
    "bars": 2,
    "hint": "Nến râu trên dài ở vùng cao, hôm nay nến giảm đóng cửa thủng đáy nó.",
    "advice": "Đang giữ thì cân nhắc thoát; đỉnh râu sao băng là mốc vô hiệu.",
+   "caution": "",
    "price": 33.3,
    "change_pct": -2.92,
    "volume": 5857400,
    "candles": [
+    {
+     "d": "2026-09-09",
+     "o": 32.42,
+     "h": 34.0,
+     "l": 32.0,
+     "c": 32.0,
+     "v": 2531000
+    },
     {
      "d": "2026-09-10",
      "o": 32.08,

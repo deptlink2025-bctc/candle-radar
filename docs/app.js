@@ -27,6 +27,10 @@
     shooting_star_confirm: { pm: 13.0, note: "Đo 2 năm: không dự báo được giảm." },
     dark_cloud:            { pm: 16.0, note: "Đo 2 năm: −0,89% sau 10 phiên (t −2,5) — mẫu BÁN duy nhất có chút giá trị." },
     three_inside_down:     { pm: 9.7,  note: "Đo 2 năm: không dự báo được giảm." },
+    // 3 mẫu khối lượng (reports/replay-2026-09-18-khoi-luong.md, 08/2022 → 09/2026)
+    limit_up_climax:       { pm: 3.8,  note: "Đo 4 năm: +2,76% sau 10 phiên (t 3,2), thắng mua-và-giữ cả 5/5 năm kể cả cú sập 2022 — tín hiệu MUA vững nhất." },
+    limit_down_volume:     { pm: 3.8,  note: "Đo 4 năm: +2,12% sau 10 phiên, +5,13% sau 20 phiên (60% đúng) — nhưng phụ thuộc thị trường, xem cảnh báo." },
+    falling_three_methods: { pm: 1.1,  note: "Đo 4 năm: 56 lần, −0,78% sau 10 phiên (t −0,8) — 2 năm đúng chỉ 2026 (−9,8%), 2023–2024 sai chiều. Chưa ổn định." },
   };
 
   // Nến mẫu để vẽ glyph ở tab Cài đặt (o,h,l,c) — chỉ để nhận diện hình, không phải dữ liệu.
@@ -46,6 +50,9 @@
     piercing: [[11, 11.2, 9.3, 9.5], [9.4, 10.7, 9.2, 10.5]],
     dark_cloud: [[9.5, 11.2, 9.3, 11], [11.1, 11.3, 9.5, 10]],
     three_inside_down: [[9, 10.7, 8.9, 10.5], [10.2, 10.3, 9.5, 9.6], [9.6, 9.7, 8.6, 8.8]],
+    limit_up_climax: [[9.6, 9.9, 9.4, 9.7], [9.7, 10.4, 9.6, 10.4]],
+    limit_down_volume: [[10.4, 10.6, 10.1, 10.3], [10.3, 10.35, 9.55, 9.6]],
+    falling_three_methods: [[10.8, 10.9, 9.4, 9.5], [9.6, 10.1, 9.5, 10.0], [10.0, 10.4, 9.9, 10.3], [10.3, 10.5, 10.1, 10.4], [10.3, 10.35, 8.9, 9.0]],
   };
 
   let D = null;
@@ -78,9 +85,9 @@
     });
     return out;
   }
-  const glyph = (pid) => {
+  const glyph = (pid, bars) => {
     const cs = (SAMPLES[pid] || []).map((a) => ({ o: a[0], h: a[1], l: a[2], c: a[3] }));
-    return `<svg viewBox="0 0 56 36" aria-hidden="true">${miniChart(cs, cs.length, 56, 36, true)}</svg>`;
+    return `<svg viewBox="0 0 56 36" aria-hidden="true">${miniChart(cs, bars || cs.length, 56, 36, true)}</svg>`;
   };
 
   // ---------------------------------------------------------------- tải dữ liệu
@@ -135,7 +142,7 @@
         <div class="desc">${esc(s.hint)}${s.company_name ? ` <span class="mute">— ${esc(s.company_name)}</span>` : ""}</div>
         <div class="chart"><svg viewBox="0 0 132 72" aria-hidden="true">${miniChart(s.candles || [], s.bars || 2, 132, 72, false)}</svg>
           <div class="px"><div class="k">Đóng cửa</div><div class="v">${px(s.price)}</div><div class="c ${ccls}">${chg == null ? "—" : (chg > 0 ? "+" : "") + chg.toFixed(1) + "% hôm nay"}</div></div></div>
-        <div class="kv"><div class="a"><span>Gợi ý</span><span>${esc(s.advice)}</span></div><div class="w"><span>Lưu ý</span><span>${esc(rp.note || "")}</span></div></div>
+        <div class="kv"><div class="a"><span>Gợi ý</span><span>${esc(s.advice)}</span></div><div class="w"><span>Lưu ý</span><span>${esc(rp.note || "")}</span></div>${s.caution ? `<div class="c"><span>Cảnh báo</span><span>${esc(s.caution)}</span></div>` : ""}</div>
         ${extra}</div>`;
     }).join("") + `</div>`;
   }
@@ -170,7 +177,7 @@
     const row = (pid) => {
       const m = pats ? pats[pid] : { name: pid, hint: "" };
       const off = disabled.has(pid), rp = REPLAY[pid] || {};
-      return `<div class="prow${off ? " off" : ""}">${glyph(pid)}<div class="t"><div class="n">${esc(m.name)}</div><div class="h">${esc(m.hint)}</div></div><div class="f">${rp.pm != null ? rp.pm.toFixed(1) + "/th" : ""}</div><div class="tg ${off ? "off" : "on"}" title="${off ? "Đang tắt" : "Đang bật"}"></div></div>`;
+      return `<div class="prow${off ? " off" : ""}">${glyph(pid, m.bars)}<div class="t"><div class="n">${esc(m.name)}</div><div class="h">${esc(m.hint)}</div></div><div class="f">${rp.pm != null ? rp.pm.toFixed(1) + "/th" : ""}</div><div class="tg ${off ? "off" : "on"}" title="${off ? "Đang tắt" : "Đang bật"}"></div></div>`;
     };
     const buys = ids.filter((p) => !pats || pats[p].direction === "buy"), sells = ids.filter((p) => pats && pats[p].direction === "sell");
     $("buyRows").innerHTML = buys.map(row).join(""); $("buyCount").textContent = `${buys.length} mẫu`;

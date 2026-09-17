@@ -32,8 +32,8 @@ LATEST = SITE_DATA / "latest.json"
 STATE = SITE_DATA / "state.json"
 DAILY = SITE_DATA / "daily"
 
-# Số nến gửi kèm mỗi tín hiệu để giao diện vẽ mini-chart (3 nến nền + tối đa 3 nến của mẫu)
-CANDLES_IN_CARD = 6
+# Số nến gửi kèm mỗi tín hiệu để giao diện vẽ mini-chart (≥ 2 nến nền + tối đa 5 nến của mẫu)
+CANDLES_IN_CARD = 7
 # Mã có ít nhất ngần này nến 1' trong ngày mới đủ thanh khoản để "bỏ phiếu" nguồn đã chốt chưa.
 LIQUID_MIN_BARS = 30
 # Tỷ lệ mã thanh khoản thiếu nến ATC từ mức này trở lên → coi nguồn chưa chốt.
@@ -109,6 +109,7 @@ def detect_signals(bars_by_symbol: dict[str, list[dict]], names: dict[str, str],
                 "symbol": sym, "company_name": names.get(sym, ""),
                 "pattern": pid, "name": meta["name"], "direction": meta["direction"],
                 "bars": meta["bars"], "hint": meta["hint"], "advice": meta["advice"],
+                "caution": meta.get("caution", ""),
                 "price": b[-1]["c"], "change_pct": round(chg, 2) if chg is not None else None,
                 "volume": b[-1]["v"], "candles": _candles_for_card(b),
             })
@@ -232,7 +233,8 @@ def run(force: bool = False, dry_run: bool = False, no_push: bool = False) -> in
         "source": {"dnse_ok": bool(dnse.last_ok), "dnse_error": dnse.last_error,
                    "n_priced": len(bars), "unsettled": unsettled, "late": late},
         "settings": {k: v for k, v in cfg.items() if not k.startswith("_")},
-        "patterns": {pid: {"name": m["name"], "direction": m["direction"], "bars": m["bars"], "hint": m["hint"]}
+        "patterns": {pid: {"name": m["name"], "direction": m["direction"], "bars": m["bars"], "hint": m["hint"],
+                           "caution": m.get("caution", "")}
                      for pid, m in patterns.PATTERNS.items()},
         "stale": stale, "signals": signals, "push": push_res,
     }

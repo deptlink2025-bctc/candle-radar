@@ -6,13 +6,14 @@ import pytest
 from job import patterns as P
 
 
-def bar(o, h, l, c):
-    return {"o": o, "h": h, "l": l, "c": c, "v": 1000}
+def bar(o, h, l, c, v=1000):
+    return {"o": o, "h": h, "l": l, "c": c, "v": v}
 
 
-def series(*tail):
-    """10 nến nền (thân 1.0, biên độ 2.0) rồi nối các nến của mẫu. Gán ngày tăng dần."""
-    base = [bar(100, 101.5, 99.5, 101) for _ in range(10)]
+def series(*tail, base_n=10):
+    """base_n nến nền (thân 1.0, biên độ 2.0, KL 1000) rồi nối các nến của mẫu. Gán ngày tăng dần.
+    Mẫu khối lượng cần 20 nến nền (avg_vol 20 phiên) → gọi với base_n=20."""
+    base = [bar(100, 101.5, 99.5, 101) for _ in range(base_n)]
     bars = base + list(tail)
     for k, b in enumerate(bars):
         b["d"] = date(2026, 1, 1) + timedelta(days=k)
@@ -184,11 +185,67 @@ def test_scan_history_tra_dung_vi_tri():
     assert hits[0]["date"] == s[-1]["d"]
 
 
-def test_bang_mau_du_15_va_can_mua_ban():
-    assert len(P.PATTERNS) == 15
-    assert len(P.BUY_PATTERNS) == 7 and len(P.SELL_PATTERNS) == 8
+# --- 3 mẫu khối lượng ----------------------------------------------------------------------------
+def test_limit_up_climax():
+    # nền đóng 101 → trần 108 (+6,9 %), thân 7 ≥ 2×1, đóng sát đỉnh, KL 2500 ≥ 2×1000, cao nhất 20 phiên
+    s = series(bar(101, 108.2, 100.8, 108, v=2500), base_n=20)
+    assert last(s) == ["limit_up_climax"]
+
+
+def test_limit_up_climax_khoi_luong_thuong_thi_khong():
+    s = series(bar(101, 108.2, 100.8, 108, v=1500), base_n=20)
+    assert "limit_up_climax" not in last(s)
+
+
+def test_limit_up_climax_thieu_20_nen_khoi_luong_thi_khong():
+    s = series(bar(101, 108.2, 100.8, 108, v=2500), base_n=12)
+    assert "limit_up_climax" not in last(s)
+
+
+def test_limit_down_volume():
+    s = series(bar(100.5, 100.6, 93.8, 94, v=2500), base_n=20)   # −6,9 %, KL 2,5×
+    assert last(s) == ["limit_down_volume"]
+
+
+def test_limit_down_volume_khoi_luong_1_5x_thi_khong():
+    s = series(bar(100.5, 100.6, 93.8, 94, v=1500), base_n=20)
+    assert last(s) == []
+
+
+def test_falling_three_methods():
+    s = series(
+        bar(101, 101.2, 98.0, 98.2),                 # nến giảm dài (thân 2,8 ≥ 0,8)
+        bar(98.4, 99.6, 98.3, 99.4),                 # ba nến nhỏ nằm trong 98,0–101,2
+        bar(99.4, 100.2, 99.0, 100.0),
+        bar(100.0, 100.6, 99.3, 100.4),
+        bar(100.2, 100.3, 97.2, 97.5),               # nến giảm thủng đáy 98,2
+    )
+    assert last(s) == ["falling_three_methods"]
+
+
+def test_falling_three_methods_nen_cuoi_khong_thung_day():
+    s = series(
+        bar(101, 101.2, 98.0, 98.2),
+        bar(98.4, 99.6, 98.3, 99.4), bar(99.4, 100.2, 99.0, 100.0), bar(100.0, 100.6, 99.3, 100.4),
+        bar(100.2, 100.3, 98.4, 98.6),               # đóng 98,6 > 98,2 → chưa thủng
+    )
+    assert "falling_three_methods" not in last(s)
+
+
+def test_falling_three_methods_nen_giua_tho_ra_ngoai():
+    s = series(
+        bar(101, 101.2, 98.0, 98.2),
+        bar(98.4, 99.6, 98.3, 99.4), bar(99.4, 102.0, 99.0, 100.0), bar(100.0, 100.6, 99.3, 100.4),
+        bar(100.2, 100.3, 97.2, 97.5),
+    )
+    assert "falling_three_methods" not in last(s)
+
+
+def test_bang_mau_du_18_va_can_mua_ban():
+    assert len(P.PATTERNS) == 18
+    assert len(P.BUY_PATTERNS) == 9 and len(P.SELL_PATTERNS) == 9
     for meta in P.PATTERNS.values():
-        assert meta["bars"] in (2, 3) and meta["name"] and meta["hint"] and meta["advice"]
+        assert meta["bars"] in (1, 2, 3, 5) and meta["name"] and meta["hint"] and meta["advice"]
 
 
 @pytest.mark.parametrize("pid", list(P.PATTERNS))

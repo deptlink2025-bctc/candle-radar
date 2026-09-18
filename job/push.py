@@ -19,6 +19,11 @@ from common.config import (
 )
 
 from .patterns import PATTERNS
+from .trend import SIGNALS as TREND_SIGNALS
+
+# Tên hiển thị theo id — mẫu nến và tín hiệu xu hướng dùng chung một bảng tra.
+NAMES = {**{pid: m["name"] for pid, m in PATTERNS.items()},
+         **{pid: m["name"] for pid, m in TREND_SIGNALS.items()}}
 
 logger = logging.getLogger(__name__)
 # Tín hiệu dùng cho phiên hôm sau nên để sống qua đêm — máy tắt mạng tối vẫn nhận được sáng.
@@ -110,7 +115,7 @@ def send(payload: dict, subs: list[dict]) -> dict:
 def symbol_payload(symbol: str, signals: list[dict], trade_date: str) -> dict:
     """Một thông báo cho MỘT mã, gộp mọi mẫu của mã đó trong phiên. `signals` cùng hướng hay
     khác hướng đều gộp — hiếm khi một mã vừa có mẫu tăng vừa có mẫu giảm, nếu có thì nói rõ."""
-    names = [PATTERNS[s["pattern"]]["name"] for s in signals]
+    names = [NAMES[s["pattern"]] for s in signals]
     dirs = {s["direction"] for s in signals}
     if dirs == {"buy"}:
         head = "▲ MUA"
@@ -140,13 +145,33 @@ def digest_payload(by_symbol: dict[str, list[dict]], trade_date: str) -> dict:
     for sym, sigs in by_symbol.items():
         arrow = "▲" if sigs[0]["direction"] == "buy" else "▼"
         extra = f" +{len(sigs) - 1}" if len(sigs) > 1 else ""
-        parts.append(f"{sym} {arrow} {PATTERNS[sigs[0]['pattern']]['name']}{extra}")
+        parts.append(f"{sym} {arrow} {NAMES[sigs[0]['pattern']]}{extra}")
     d, m = trade_date[8:10], trade_date[5:7]
     return {
         "kind": "digest",
         "title": f"{len(by_symbol)} mã có mẫu hình · {n_buy} MUA, {n_sell} BÁN",
         "body": f"phiên {d}/{m} · " + " · ".join(parts),
         "url": "./#today", "tag": "cr-digest", "hot": True,
+    }
+
+
+def trend_payload(signal: dict, trade_date: str) -> dict:
+    """MỖI tín hiệu xu hướng là MỘT thông báo riêng, không bao giờ gộp vào bản tổng hợp: hiếm (~1/phiên
+    cả danh mục) và mang mức dừng lỗ — con số cần để đặt lệnh sáng hôm sau."""
+    buy = signal["direction"] == "buy"
+    sym = signal["symbol"]
+    chg = signal.get("change_pct")
+    chg_txt = f" ({chg:+.1f}%)" if chg is not None else ""
+    d, m = trade_date[8:10], trade_date[5:7]
+    if buy:
+        tail = f"dừng lỗ {signal['st_line']:.2f} (−{signal['risk_pct']:.1f}%)"
+    else:
+        tail = f"xanh được {signal['days_in_trend']} phiên trước khi gãy"
+    return {
+        "kind": "trend", "title": f"{'▲ MUA' if buy else '▼ THOÁT'} {sym} · {NAMES[signal['pattern']]}",
+        "body": f"giá {signal['price']:.2f}{chg_txt} · phiên {d}/{m} · {tail}",
+        "symbol": sym, "direction": signal["direction"],
+        "url": "./#today", "tag": f"cr-st-{sym}", "hot": True,
     }
 
 

@@ -1,8 +1,9 @@
-# Candle Radar — cảnh báo 18 mẫu hình nến sau phiên
+# Candle Radar — cảnh báo 18 mẫu hình nến + xu hướng Supertrend sau phiên
 
 App thứ 7 trong bộ công cụ chứng khoán cá nhân. Mỗi chiều sau ATC, quét 39 mã trong danh mục
-KingStock, nhận dạng 18 mẫu hình nến (15 mẫu đảo chiều cổ điển + 3 mẫu khối lượng) **trên nến đã chốt**, đẩy thông báo lên điện thoại
-và ghi lại để xem trên giao diện tĩnh. Không máy chủ, 0 đồng.
+KingStock, nhận dạng 18 mẫu hình nến (15 mẫu đảo chiều cổ điển + 3 mẫu khối lượng) và 2 tín hiệu xu hướng
+Supertrend (10,3) × EMA10 **trên nến đã chốt**, đẩy thông báo lên điện thoại và ghi lại để xem trên giao
+diện tĩnh. Không máy chủ, 0 đồng.
 
 - Giao diện: `https://deptlink2025-bctc.github.io/candle-radar/` (GitHub Pages từ `/docs`)
 - Job: GitHub Actions 15:35 T2–T6 (dự phòng 16:05 / 16:45 / 18:10 nếu nguồn chốt muộn) — lệch 15 phút với TuDoanh Radar
@@ -38,6 +39,35 @@ venv\Scripts\python -m scripts.replay --days 750 --md > reports/replay-<ngày>.m
 
 Cách đọc số: MUA và BÁN tách riêng (VN không bán khống); với BÁN, lợi suất âm sau tín hiệu = đúng;
 luôn so với mốc mua-đại trên cùng chuỗi; t > 2 mới đáng để ý; chưa trừ phí, chưa tính T+2.
+
+## Xu hướng: Supertrend (10,3) × EMA10 (job/trend.py) — thêm 18/09/2026
+
+Nghiên cứu ở `c:\Claude code\supertrend-lab` (trang lab: chỉnh tham số tính lại ngay; bản JS đối chiếu tay,
+lưới 18 tổ hợp), rồi port sang Python thuần trong `job/trend.py` — Python và JS cho ra **cùng 26/26 tín
+hiệu** trên 30 phiên × 39 mã. Tái lập số đo: `scripts/replay_trend.py` →
+[reports/replay-trend-2026-09-18.md](reports/replay-trend-2026-09-18.md).
+
+- **Toán:** ATR(10) kiểu Wilder/RMA (giống TradingView — bản SMA lệch ngày lật màu 1–2 phiên); dải
+  `hl2 ± 3·ATR`, dải "final" chỉ siết vào, không nới ra trừ khi giá đã vượt; EMA10 mồi bằng SMA.
+- **Hai tín hiệu, chỉ chiều mua:** `st_buy` = Supertrend xanh và đóng cửa > EMA10 **lần đầu kể từ đợt đỏ
+  gần nhất**; `st_exit` = Supertrend lật đỏ. Thoát **chỉ** khi lật đỏ — quy tắc gốc "thoát khi rớt EMA10"
+  đo được là hại (+1,24 %/lệnh, thắng 37 %, giữ 6 phiên) so với +6,71 %/lệnh khi chỉ thoát bằng Supertrend.
+- **Số đo 11/2019 → 09/2026, 39 mã, khớp mở phiên sau, T+2, phí 0,4 %/vòng:** 819 lệnh (≈ 10/tháng cả
+  danh mục ≈ 0,5/phiên), thắng 47 %, **+6,71 %/lệnh** (mốc mua đại rồi giữ 34 phiên +3,93 %), t = 5,9,
+  PF 2,65. Cả kỳ **+212 % so với mua-và-giữ +294 %**, nhưng sụt giảm sâu nhất **−42 % so với −63 %**, trong thị
+  trường 54 % thời gian; 2022 mất −11 % thay vì −40 %; 2024 (đi ngang) gần hoà. Tức là công cụ **bảo toàn vốn
+  năm xấu**, không phải công cụ tối đa hoá lãi năm tốt. Tỷ lệ thắng thấp là bản chất: lệnh thắng TB +23 %,
+  thua TB −7,7 %.
+- **Lưới lân cận** ATR {7,10,14} × hệ số {2,3,4} × EMA {10,20}: 18/18 ô dương, t > 4,8 → không khớp quá mức;
+  EMA20 nhỉnh hơn EMA10 ở mọi ô, hệ số 4 tệ nhất.
+- **Push:** mỗi tín hiệu xu hướng là **một thông báo riêng** (`cr-st-<mã>`), không bao giờ vào bản tổng hợp —
+  hiếm và mang mức dừng lỗ (dải Supertrend) để đặt lệnh sáng hôm sau. Mẫu nến giữ quy tắc gộp cũ.
+- **Giao diện:** thẻ xu hướng đứng đầu tab Hôm nay (nến 22 phiên có đường Supertrend/EMA, ô dừng lỗ, rủi ro,
+  EMA10); bảng "N xanh · M đỏ" 39 mã; thẻ mẫu nến thêm dòng XU HƯỚNG (mẫu MUA khi Supertrend đỏ được ghi
+  "ngược xu hướng"); tab **Biểu đồ** vẽ 130 phiên từ `docs/data/bars.json` (job ghi mỗi ngày, ~200 KB),
+  Supertrend/EMA tính lại trong trình duyệt cùng công thức.
+- Tắt: thêm `st_buy` / `st_exit` vào `patterns_disabled`. Danh mục chọn hôm nay nên cả chiến lược lẫn
+  mua-và-giữ đều hưởng lợi hậu nghiệm — so sánh giữa hai bên vẫn công bằng vì cùng chuỗi giá.
 
 ## 18 mẫu hình (job/patterns.py)
 
@@ -95,24 +125,30 @@ Nến nào biên độ 0 (đứng giá, trần/sàn không khớp) → không nh
 ## Job sau phiên (job/run_daily.py)
 
 1. `watchlist.load()`: GET KingStock `/api/watchlist` → ghi `docs/data/watchlist.json`; lỗi → dùng bản chụp.
-2. `fetch_bars()`: nến ngày 120 phiên/mã + nến 1' hôm nay; ≥ 20 % mã thanh khoản (≥ 30 nến 1') thiếu nến
-   ATC 14:45 → **nguồn chưa chốt**, ghi `state.unsettled`, không ghi file, cron sau thử lại.
+2. `fetch_bars()`: nến ngày 200 ngày lịch (~135 phiên, đủ warm-up 40 phiên cho Supertrend/EMA) + nến 1'
+   hôm nay; ≥ 20 % mã thanh khoản (≥ 30 nến 1') thiếu nến ATC 14:45 → **nguồn chưa chốt**, ghi
+   `state.unsettled`, không ghi file, cron sau thử lại.
 3. `trade_date` = ngày nến cuối lớn nhất. Đã có `docs/data/daily/<ngày>.json` → thoát (idempotent).
 4. Mã có nến cuối **cũ hơn** `trade_date` (không khớp lệnh hôm nay) → vào `stale`, **không xét mẫu**.
    Không có bước này, một mẫu cũ của mã kém thanh khoản sẽ được "phát hiện lại" mỗi ngày (bẫy IDP
    ở TuDoanh Radar 16/09/2026).
-5. `detect_at(bars, -1)` cho từng mã → tín hiệu kèm 7 nến cuối để giao diện vẽ mini-chart.
-6. Push: một thông báo/mã (`cr-<mã>`, gộp tên mẫu); > `digest_threshold` mã → một thông báo tổng hợp.
-   Thứ Hai gửi thêm nhịp tim. Máy mới đăng ký → chào mừng ngay ở đầu job.
-7. Ghi `latest.json` (giao diện đọc), `daily/<ngày>.json`, `state.json`.
+5. `patterns.detect_at(bars, -1)` + `trend.detect_at(bars, -1)` cho từng mã → tín hiệu `kind: candle`
+   (kèm 7 nến) / `kind: trend` (kèm 22 nến có dải Supertrend + EMA, `st_line`, `risk_pct`, `days_in_trend`).
+   `trend_board()` → trạng thái Supertrend của mọi mã (`latest.trend`).
+6. Push: xu hướng → **mỗi tín hiệu một thông báo riêng** (`cr-st-<mã>`); mẫu nến → một thông báo/mã
+   (`cr-<mã>`, gộp tên mẫu), > `digest_threshold` mã → một thông báo tổng hợp. Thứ Hai gửi thêm nhịp tim.
+   Máy mới đăng ký → chào mừng ngay ở đầu job.
+7. Ghi `latest.json` (giao diện đọc), `bars.json` (130 nến/mã cho tab Biểu đồ), `daily/<ngày>.json`, `state.json`.
 
 Chạy tay: `run-daily-local.bat` (= `--force --no-push`), `--dry-run` chỉ in.
 
 ## Giao diện (docs/)
 
-Ba tab: **Hôm nay** (thẻ theo mã, mini-chart 6 nến: nến thuộc mẫu tô màu, nến xác nhận khung vàng,
-dòng GỢI Ý theo quy tắc cố định và LƯU Ý từ kết quả đo), **Lịch sử** (30 phiên, đếm MUA/BÁN), **Cài đặt**
-(đăng ký thông báo, bảng 15 mẫu với glyph, số lần/tháng và trạng thái bật/tắt).
+Bốn tab: **Hôm nay** (thẻ xu hướng Supertrend đứng đầu, bảng 39 mã xanh/đỏ, rồi thẻ mẫu nến theo mã:
+mini-chart nến thuộc mẫu tô màu, nến xác nhận khung vàng, dòng GỢI Ý theo quy tắc cố định, XU HƯỚNG và
+LƯU Ý từ kết quả đo), **Lịch sử** (30 phiên, đếm xu hướng / mẫu nến riêng), **Biểu đồ** (130 phiên có
+Supertrend, EMA10, vùng xanh/đỏ, mũi tên mua/thoát, chạm xem giá), **Cài đặt** (đăng ký thông báo, 2 tín
+hiệu xu hướng + 18 mẫu với glyph, số lần/tháng và trạng thái bật/tắt).
 
 Không có Worker thì công tắc chỉ hiển thị; đổi trong `docs/data/settings.json` rồi push.
 Đăng ký thông báo không Worker: bấm "Bật thông báo" → sao chép đoạn mã → dán vào GitHub Secret
@@ -155,11 +191,13 @@ Nghiệm thu: `docs/data/state.json` có `devices.n = 1`, `last_run`; 15:35 hôm
 ## Kiểm thử
 
 ```
-venv\Scripts\python -m pytest tests -q      # 65 test: 18 mẫu dương/âm, bảo vệ, job idempotent, push gộp
+venv\Scripts\python -m pytest tests -q      # 76 test: 18 mẫu dương/âm, Supertrend/EMA tay tính, job idempotent, push gộp/riêng
 node --check docs/app.js
 ```
 
 ## Không làm (đã cân nhắc)
 
-- Không quét trong phiên (nến chưa chốt sẽ "vẽ lại"). Không lọc ADX/MA/%K (đã gỡ ở KingStock 11/09/2026).
+- Không quét trong phiên (nến chưa chốt sẽ "vẽ lại"). Không lọc ADX/MA/%K cho mẫu nến (đã gỡ ở KingStock
+  11/09/2026) — Supertrend là tín hiệu riêng, có số đo riêng, không phải bộ lọc chồng lên mẫu nến.
+- Không thoát xu hướng khi rớt EMA10 (đo được là hại). Không đo Supertrend tuần — là bước thử kế tiếp nếu cần.
 - Không Fly.io (app không cần đúng phút). Không Cloudflare Worker ở GĐ 1 (tài khoản chỉ còn 1/5 suất cron).

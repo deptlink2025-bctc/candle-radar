@@ -31,6 +31,9 @@
     limit_up_climax:       { pm: 3.8,  note: "Đo 4 năm: +2,76% sau 10 phiên (t 3,2), thắng mua-và-giữ cả 5/5 năm kể cả cú sập 2022 — tín hiệu MUA vững nhất." },
     limit_down_volume:     { pm: 3.8,  note: "Đo 4 năm: +2,12% sau 10 phiên, +5,13% sau 20 phiên (60% đúng) — nhưng phụ thuộc thị trường, xem cảnh báo." },
     falling_three_methods: { pm: 1.1,  note: "Đo 4 năm: 56 lần, −0,78% sau 10 phiên (t −0,8) — 2 năm đúng chỉ 2026 (−9,8%), 2023–2024 sai chiều. Chưa ổn định." },
+    // 2 tín hiệu xu hướng (reports/replay-trend-2026-09-18.md, 11/2019 → 09/2026, 39 mã, khớp mở phiên sau, T+2, có phí)
+    st_buy:                { pm: 10.4, note: "Đo 7 năm: +6,71%/lệnh, thắng 47%, PF 2,65 — hơn mua đại rồi giữ 34 phiên (+3,93%). Lãi đến từ ít lệnh thắng to; 5/10 lệnh thua nhỏ." },
+    st_exit:               { pm: 10.2, note: "Điểm thoát duy nhất của hệ thống. Thoát sớm hơn khi rớt EMA10 đo được là hại (+1,24%/lệnh so với +6,71%)." },
   };
 
   // Nến mẫu để vẽ glyph ở tab Cài đặt (o,h,l,c) — chỉ để nhận diện hình, không phải dữ liệu.
@@ -86,9 +89,42 @@
     return out;
   }
   const glyph = (pid, bars) => {
+    if (TREND_GLYPH[pid]) return `<svg viewBox="0 0 56 36" aria-hidden="true">${trendChart(TREND_GLYPH[pid], 56, 36, true)}</svg>`;
     const cs = (SAMPLES[pid] || []).map((a) => ({ o: a[0], h: a[1], l: a[2], c: a[3] }));
     return `<svg viewBox="0 0 56 36" aria-hidden="true">${miniChart(cs, bars || cs.length, 56, 36, true)}</svg>`;
   };
+
+  // ---------------------------------------------------------------- xu hướng: mini-chart có đường
+  /* Nến kèm dải Supertrend (xanh/đỏ, ngắt đoạn khi đổi màu) và EMA10; nến cuối khung vàng.
+     `cs` là candles của tín hiệu xu hướng: {o,h,l,c,st,up,ema}. */
+  function trendChart(cs, W, H, thin) {
+    const n = cs.length; if (!n) return "";
+    const vals = cs.flatMap((c) => [c.h, c.l, c.st, c.ema]).filter((v) => v != null);
+    const hi = Math.max(...vals), lo = Math.min(...vals), span = (hi - lo) || 1;
+    const top = 5, bottom = H - 7, y = (v) => bottom - (v - lo) / span * (bottom - top);
+    const slot = W / n, bw = Math.max(2, Math.min(8, slot * 0.55));
+    let out = `<line x1="0" y1="${H - 3}" x2="${W}" y2="${H - 3}" stroke="#D9D3C3" stroke-width="1"></line>`;
+    cs.forEach((c, i) => {
+      const cx = slot * i + slot / 2, col = c.c >= c.o ? "#2E7D4F" : "#B84A3A";
+      const yo = y(c.o), yc = y(c.c), bt = Math.min(yo, yc), bh = Math.max(1.2, Math.abs(yo - yc));
+      out += `<line x1="${cx}" y1="${y(c.h)}" x2="${cx}" y2="${y(c.l)}" stroke="${col}" stroke-width="${thin ? 1 : 1.3}" opacity=".85"></line>`;
+      out += `<rect x="${cx - bw / 2}" y="${bt}" width="${bw}" height="${bh}" fill="${col}" opacity=".85"></rect>`;
+      if (i === n - 1 && !thin) out += `<rect x="${cx - bw / 2 - 3}" y="${y(c.h) - 3}" width="${bw + 6}" height="${y(c.l) - y(c.h) + 6}" rx="3" fill="none" stroke="#C99A2E" stroke-width="2"></rect>`;
+    });
+    const ema = cs.map((c, i) => c.ema == null ? null : `${(slot * i + slot / 2).toFixed(1)},${y(c.ema).toFixed(1)}`).filter(Boolean).join(" ");
+    if (ema) out += `<polyline points="${ema}" fill="none" stroke="#5B6FA8" stroke-width="${thin ? 1.2 : 1.6}" stroke-linejoin="round"></polyline>`;
+    let seg = [], segUp = null;
+    const flush = () => { if (seg.length) out += `<polyline points="${seg.join(" ")}" fill="none" stroke="${segUp ? "#2E7D4F" : "#B84A3A"}" stroke-width="${thin ? 1.6 : 2.2}" stroke-linejoin="round"></polyline>`; seg = []; };
+    cs.forEach((c, i) => { if (c.st == null) return; if (segUp !== null && c.up !== segUp) flush(); segUp = c.up; seg.push(`${(slot * i + slot / 2).toFixed(1)},${y(c.st).toFixed(1)}`); });
+    flush();
+    return out;
+  }
+  // Chuỗi mẫu vẽ glyph hai tín hiệu ở tab Cài đặt: [o,h,l,c,st,up,ema]
+  const TREND_GLYPH = {
+    st_buy: [[9.0, 9.2, 8.7, 8.8, 9.6, false, 9.3], [8.8, 9.0, 8.5, 8.6, 9.5, false, 9.2], [8.6, 9.1, 8.5, 9.0, 9.4, false, 9.1], [9.0, 9.6, 8.9, 9.5, 8.5, true, 9.1], [9.5, 10.1, 9.4, 10.0, 8.6, true, 9.3], [10.0, 10.5, 9.9, 10.4, 8.9, true, 9.6]],
+    st_exit: [[9.0, 9.6, 8.9, 9.5, 8.5, true, 9.1], [9.5, 10.1, 9.4, 10.0, 8.7, true, 9.3], [10.0, 10.3, 9.7, 9.8, 8.9, true, 9.5], [9.8, 9.9, 9.2, 9.3, 8.9, true, 9.5], [9.3, 9.4, 8.6, 8.7, 9.9, false, 9.4], [8.7, 8.9, 8.3, 8.4, 9.9, false, 9.2]],
+  };
+  for (const k in TREND_GLYPH) TREND_GLYPH[k] = TREND_GLYPH[k].map((a) => ({ o: a[0], h: a[1], l: a[2], c: a[3], st: a[4], up: a[5], ema: a[6] }));
 
   // ---------------------------------------------------------------- tải dữ liệu
   async function load() {
@@ -102,49 +138,95 @@
       return;
     }
     renderToday(); renderHistory(); renderSettings();
+    BARSD = null;   // nến cho tab Biểu đồ tải lại lần mở tab kế tiếp (phiên mới)
+    if ($("p-chart").classList.contains("on")) renderChart();
   }
 
   // ---------------------------------------------------------------- Hôm nay
   function renderToday() {
-    const sig = D.signals || [], stale = D.stale || [], src = D.source || {};
-    const nSym = new Set(sig.map((s) => s.symbol)).size;
-    $("todaySub").textContent = `Mẫu hình nến đảo chiều trên nến đã chốt — ${D.watchlist ? D.watchlist.n : "?"} mã đang theo dõi.`;
+    const all = D.signals || [], stale = D.stale || [], src = D.source || {};
+    const trend = all.filter((s) => s.kind === "trend"), sig = all.filter((s) => s.kind !== "trend");
+    const nSym = new Set(all.map((s) => s.symbol)).size;
+    $("todaySub").textContent = `Mẫu hình nến và xu hướng trên nến đã chốt — ${D.watchlist ? D.watchlist.n : "?"} mã đang theo dõi.`;
     const gen = D.generated_at ? D.generated_at.slice(11, 16) : "";
     let note = `Nguồn DNSE chốt lúc ${gen}`;
     if (src.late) note += " · nguồn chốt muộn, chạy lại ở cron dự phòng";
     if (stale.length) note += ` · ${stale.length} mã chưa khớp lệnh hôm nay (${stale.slice(0, 4).map((s) => s.symbol).join(", ")}${stale.length > 4 ? "…" : ""})`;
     if (src.dnse_error) note += ` · <b>DNSE lỗi: ${esc(src.dnse_error)}</b>`;
     if (D.watchlist && D.watchlist.source === "cache") note += " · danh mục dùng bản chụp (KingStock không trả lời)";
+    const parts = [];
+    if (trend.length) parts.push(`${trend.length} xu hướng`);
+    if (sig.length) parts.push(`${sig.length} mẫu nến`);
     $("strip").innerHTML =
       `<span class="k">Phiên ${dmy(D.trade_date)}</span><svg aria-hidden="true"><use href="#i-arrow"/></svg>` +
       `<span class="v">${src.n_priced || 0} mã đã quét</span><svg aria-hidden="true"><use href="#i-arrow"/></svg>` +
-      `<span class="v">${sig.length ? `${sig.length} mẫu hình · ${nSym} mã` : "không có mẫu hình"}</span>` +
+      `<span class="v">${parts.length ? `${parts.join(" · ")} · ${nSym} mã` : "không có tín hiệu"}</span>` +
       `<span class="note">${note}</span>`;
 
+    renderTrendCards(trend);
+    renderBoard();
+
     if (!sig.length) {
-      $("todayBody").innerHTML = `<div class="empty"><b>Không có mẫu hình nào hôm nay</b>Đã quét ${src.n_priced || 0} mã trên nến đã chốt phiên ${dmy(D.trade_date)}. Không có gì để làm — đó cũng là một câu trả lời.</div>`;
+      $("todayBody").innerHTML = `<div class="seclabel"><div class="kicker">Mẫu hình nến · 18 mẫu</div></div><div class="empty"><b>Không có mẫu hình nào hôm nay</b>Đã quét ${src.n_priced || 0} mã trên nến đã chốt phiên ${dmy(D.trade_date)}. Không có gì để làm — đó cũng là một câu trả lời.</div>`;
       return;
     }
     // Gộp theo mã: một thẻ một mã, nhiều mẫu thì liệt kê thêm
     const bySym = new Map();
     sig.forEach((s) => { if (!bySym.has(s.symbol)) bySym.set(s.symbol, []); bySym.get(s.symbol).push(s); });
+    const state = new Map((D.trend || []).map((t) => [t.symbol, t]));
     let i = 0;
-    $("todayBody").innerHTML = `<div class="cards">` + [...bySym.entries()].map(([sym, list]) => {
+    $("todayBody").innerHTML = `<div class="seclabel"><div class="kicker">Mẫu hình nến · 18 mẫu</div><span class="chip soft">${sig.length} mẫu · ${bySym.size} mã</span></div><div class="cards">` + [...bySym.entries()].map(([sym, list]) => {
       const s = list[0], buy = s.direction === "buy";
       const dirs = new Set(list.map((x) => x.direction));
       const chip = dirs.size > 1 ? `<span class="chip sell">TRÁI CHIỀU</span>` : `<span class="chip ${buy ? "buy" : "sell"}">${buy ? "MUA" : "BÁN"}</span>`;
       const chg = s.change_pct, ccls = chg > 0 ? "up" : chg < 0 ? "down" : "flat";
       const extra = list.length > 1 ? `<div class="more">Cùng phiên còn: <b>${list.slice(1).map((x) => esc(x.name)).join(", ")}</b></div>` : "";
       const rp = REPLAY[s.pattern] || {};
+      const tr = state.get(sym);
+      // Dòng XU HƯỚNG: mẫu MUA khi Supertrend đỏ là mua ngược xu hướng — nói thẳng để người dùng tự cân nhắc
+      const trLine = tr ? `<div class="${tr.up ? "a" : "c"}"><span>Xu hướng</span><span>Supertrend ${tr.up ? "xanh" : "đỏ"} từ ${dmy(tr.since)} (${tr.days} phiên)${buy && !tr.up ? " — mẫu MUA ngược xu hướng, cân nhắc bỏ qua" : ""} · <a href="#chart" data-chart="${esc(sym)}">biểu đồ</a></span></div>` : "";
       i += 1;
       return `<div class="card ${dirs.size > 1 ? "sell" : buy ? "buy" : "sell"}">
         <div class="top"><div class="num">${pad2(i)}</div><h3>${esc(sym)} · ${esc(s.name)}</h3>${chip}</div>
         <div class="desc">${esc(s.hint)}${s.company_name ? ` <span class="mute">— ${esc(s.company_name)}</span>` : ""}</div>
         <div class="chart"><svg viewBox="0 0 132 72" aria-hidden="true">${miniChart(s.candles || [], s.bars || 2, 132, 72, false)}</svg>
           <div class="px"><div class="k">Đóng cửa</div><div class="v">${px(s.price)}</div><div class="c ${ccls}">${chg == null ? "—" : (chg > 0 ? "+" : "") + chg.toFixed(1) + "% hôm nay"}</div></div></div>
-        <div class="kv"><div class="a"><span>Gợi ý</span><span>${esc(s.advice)}</span></div><div class="w"><span>Lưu ý</span><span>${esc(rp.note || "")}</span></div>${s.caution ? `<div class="c"><span>Cảnh báo</span><span>${esc(s.caution)}</span></div>` : ""}</div>
+        <div class="kv"><div class="a"><span>Gợi ý</span><span>${esc(s.advice)}</span></div>${trLine}<div class="w"><span>Lưu ý</span><span>${esc(rp.note || "")}</span></div>${s.caution ? `<div class="c"><span>Cảnh báo</span><span>${esc(s.caution)}</span></div>` : ""}</div>
         ${extra}</div>`;
     }).join("") + `</div>`;
+  }
+
+  /* Thẻ xu hướng: mỗi tín hiệu một thẻ (đúng như mỗi tín hiệu một thông báo), nến 22 phiên có đường
+     Supertrend/EMA, 4 ô số: dải Supertrend (= dừng lỗ), rủi ro tới dừng lỗ, EMA10, khối lượng. */
+  function renderTrendCards(trend) {
+    if (!trend.length) {
+      $("trendBody").innerHTML = `<div class="seclabel"><div class="kicker">Xu hướng · Supertrend</div><span class="new">Mới</span></div><div class="empty"><b>Không có tín hiệu xu hướng mới</b>Không mã nào lật màu Supertrend hay vượt EMA10 lần đầu trong phiên ${dmy(D.trade_date)}. Bảng dưới cho biết mã nào đang xanh.</div>`;
+      return;
+    }
+    let i = 0;
+    $("trendBody").innerHTML = `<div class="seclabel"><div class="kicker">Xu hướng · Supertrend</div><span class="new">Mới</span></div><div class="cards">` + trend.map((s) => {
+      const buy = s.direction === "buy", chg = s.change_pct, ccls = chg > 0 ? "up" : chg < 0 ? "down" : "flat", rp = REPLAY[s.pattern] || {};
+      i += 1;
+      return `<div class="card ${buy ? "buy" : "sell"}">
+        <div class="top"><div class="num">${pad2(i)}</div><h3>${esc(s.symbol)} · ${esc(s.name)}</h3><span class="chip ${buy ? "buy" : "sell"}">${buy ? "MUA" : "THOÁT"}</span></div>
+        <div class="desc">${esc(s.hint)}${s.company_name ? ` <span class="mute">— ${esc(s.company_name)}</span>` : ""}</div>
+        <div class="chart"><svg viewBox="0 0 132 72" aria-hidden="true">${trendChart(s.candles || [], 132, 72, false)}</svg>
+          <div class="px"><div class="k">Đóng cửa</div><div class="v">${px(s.price)}</div><div class="c ${ccls}">${chg == null ? "—" : (chg > 0 ? "+" : "") + chg.toFixed(1) + "% hôm nay"}</div></div></div>
+        <div class="lv"><div><span class="k">${buy ? "Dừng lỗ · dải Supertrend" : "Dải Supertrend (nay là kháng cự)"}</span><span class="v">${px(s.st_line)}</span></div><div><span class="k">${buy ? "Rủi ro tới dừng lỗ" : "Xanh được"}</span><span class="v">${buy ? (s.risk_pct == null ? "—" : "−" + s.risk_pct + "%") : (s.days_in_trend == null ? "—" : s.days_in_trend + " phiên")}</span></div><div><span class="k">EMA10</span><span class="v">${px(s.ema)}</span></div><div><span class="k">Khối lượng</span><span class="v">${s.volume == null ? "—" : (s.volume / 1e3).toFixed(0) + "k"}</span></div></div>
+        <div class="kv"><div class="a"><span>Gợi ý</span><span>${buy && s.st_line != null ? `Mua phiên sau; đặt dừng lỗ ${px(s.st_line)}; khối lượng = 1% vốn ÷ ${s.risk_pct}%.` : esc(s.advice)}</span></div><div class="w"><span>Lưu ý</span><span>${esc(rp.note || "")}</span></div></div>
+        <button type="button" class="linkbtn" data-chart="${esc(s.symbol)}">Xem biểu đồ Supertrend ${esc(s.symbol)} →</button></div>`;
+    }).join("") + `</div>`;
+  }
+
+  /* Bảng 39 mã: xanh đậm = xanh và giá trên EMA10 (điều kiện mua còn nguyên); số nhỏ = số phiên ở trạng thái đó. */
+  function renderBoard() {
+    const tr = D.trend || [];
+    if (!tr.length) { $("boardBody").innerHTML = ""; return; }
+    const up = tr.filter((t) => t.up).length;
+    $("boardBody").innerHTML = `<div class="seclabel"><div class="kicker">Xu hướng ${tr.length} mã theo Supertrend (10,3)</div></div><div class="cards"><div class="card info">
+      <div class="top"><h3>${up} xanh · ${tr.length - up} đỏ</h3><span class="chip soft">phiên ${dmy(D.trade_date)}</span></div>
+      <div class="desc">Xanh đậm = xanh và giá đang trên EMA10 (điều kiện mua còn nguyên). Số nhỏ là số phiên ở trạng thái đó. Bấm mã để mở biểu đồ.</div>
+      <div class="board">${tr.map((t) => `<span class="${t.up ? "g" + (t.above_ema ? " w" : "") : "r"}" data-chart="${esc(t.symbol)}" title="${t.up ? "xanh" : "đỏ"} từ ${dmy(t.since)} · dải ${px(t.line)}">${esc(t.symbol)} <small>${t.days}</small></span>`).join("")}</div></div></div>`;
   }
 
   // ---------------------------------------------------------------- Lịch sử
@@ -152,20 +234,24 @@
     const hist = D.history || [];
     $("histKicker").textContent = `${hist.length} phiên gần nhất`;
     const nb = hist.reduce((a, h) => a + h.n_buy, 0), ns = hist.reduce((a, h) => a + h.n_sell, 0);
-    const per = hist.length ? ((nb + ns) / hist.length).toFixed(1) : "—";
+    const nt = hist.reduce((a, h) => a + (h.n_trend_buy || 0) + (h.n_trend_exit || 0), 0);
+    const per = hist.length ? ((nb + ns + nt) / hist.length).toFixed(1) : "—";
     $("totals").innerHTML =
-      `<div class="tot" style="background:var(--sage);border-color:var(--sage-line)"><div class="k">Mua</div><div class="v">${nb}</div></div>` +
-      `<div class="tot" style="background:var(--blush);border-color:var(--blush-line)"><div class="k">Bán</div><div class="v">${ns}</div></div>` +
-      `<div class="tot" style="background:var(--peach);border-color:var(--peach-line)"><div class="k">Mỗi phiên</div><div class="v">${per}</div></div>`;
+      `<div class="tot" style="background:var(--peach);border-color:var(--peach-line)"><div class="k">Xu hướng</div><div class="v">${nt}</div></div>` +
+      `<div class="tot" style="background:var(--sage);border-color:var(--sage-line)"><div class="k">Mẫu nến</div><div class="v">${nb + ns}</div></div>` +
+      `<div class="tot" style="background:var(--strip);border-color:var(--strip-line)"><div class="k">Mỗi phiên</div><div class="v">${per}</div></div>`;
     if (!hist.length) { $("days").innerHTML = `<div class="empty"><b>Chưa có phiên nào</b>Job ghi lại đây sau mỗi phiên đã quét.</div>`; return; }
     $("days").innerHTML = hist.map((h) => {
       const chips = [];
+      if (h.n_trend_buy) chips.push(`<span class="chip trend">${h.n_trend_buy} MUA · XU HƯỚNG</span>`);
+      if (h.n_trend_exit) chips.push(`<span class="chip trend">${h.n_trend_exit} THOÁT</span>`);
       if (h.n_buy) chips.push(`<span class="chip buy">${h.n_buy} MUA</span>`);
       if (h.n_sell) chips.push(`<span class="chip sell">${h.n_sell} BÁN</span>`);
-      if (!h.n_buy && !h.n_sell) chips.push(`<span class="chip soft">Không có</span>`);
+      if (!chips.length) chips.push(`<span class="chip soft">Không có</span>`);
       if (h.late) chips.push(`<span class="chip late">Nguồn chốt muộn</span>`);
-      const list = h.items && h.items.length ? h.items.map(esc).join(" · ") : `Đã quét, không mẫu nào khớp.`;
-      return `<div class="day"><div class="top"><b>${dow(h.date)} ${dmy(h.date)}</b>${chips.join("")}</div><div class="list">${list}</div></div>`;
+      const tl = h.trend_items && h.trend_items.length ? `<b>Xu hướng:</b> ${h.trend_items.map(esc).join(" · ")}` : "";
+      const cl = h.items && h.items.length ? `${tl ? "<br>" : ""}Mẫu nến: ${h.items.map(esc).join(" · ")}` : "";
+      return `<div class="day"><div class="top"><b>${dow(h.date)} ${dmy(h.date)}</b>${chips.join("")}</div><div class="list">${tl || cl ? tl + cl : "Đã quét, không tín hiệu nào."}</div></div>`;
     }).join("");
   }
 
@@ -179,7 +265,12 @@
       const off = disabled.has(pid), rp = REPLAY[pid] || {};
       return `<div class="prow${off ? " off" : ""}">${glyph(pid, m.bars)}<div class="t"><div class="n">${esc(m.name)}</div><div class="h">${esc(m.hint)}</div></div><div class="f">${rp.pm != null ? rp.pm.toFixed(1) + "/th" : ""}</div><div class="tg ${off ? "off" : "on"}" title="${off ? "Đang tắt" : "Đang bật"}"></div></div>`;
     };
-    const buys = ids.filter((p) => !pats || pats[p].direction === "buy"), sells = ids.filter((p) => pats && pats[p].direction === "sell");
+    const isTrend = (p) => (pats ? pats[p].kind === "trend" : !!TREND_GLYPH[p]);
+    const trends = pats ? ids.filter(isTrend) : Object.keys(TREND_GLYPH);
+    const cand = ids.filter((p) => !isTrend(p));
+    const buys = cand.filter((p) => !pats || pats[p].direction === "buy"), sells = cand.filter((p) => pats && pats[p].direction === "sell");
+    const trow = (pid) => pats ? row(pid) : `<div class="prow">${glyph(pid)}<div class="t"><div class="n">${pid}</div></div><div class="f"></div><div class="tg on"></div></div>`;
+    $("trendRows").innerHTML = trends.map(trow).join(""); $("trendCount").textContent = `${trends.length} tín hiệu`;
     $("buyRows").innerHTML = buys.map(row).join(""); $("buyCount").textContent = `${buys.length} mẫu`;
     $("sellRows").innerHTML = sells.map(row).join(""); $("sellCount").textContent = `${sells.length} mẫu`;
     fetch("data/state.json", { cache: "no-cache" }).then((r) => r.ok ? r.json() : null).then((st) => {
@@ -258,15 +349,141 @@
   function toast(t, b) { $("toastTitle").textContent = t; $("toastBody").textContent = b || ""; $("toast").classList.add("on"); clearTimeout(toastTimer); toastTimer = setTimeout(() => $("toast").classList.remove("on"), 5000); }
   $("toast").addEventListener("click", () => $("toast").classList.remove("on"));
 
+  // ---------------------------------------------------------------- Biểu đồ
+  /* Toán chỉ báo chép từ job/trend.py (cùng công thức, cùng tham số) — nến dạng [d,o,h,l,c,v]. */
+  const O = 1, H = 2, L = 3, C = 4;
+  function ema(bars, n) {
+    const out = new Array(bars.length).fill(null); if (bars.length < n) return out;
+    let v = 0; for (let i = 0; i < n; i++) v += bars[i][C]; v /= n; out[n - 1] = v;
+    const a = 2 / (n + 1); for (let i = n; i < bars.length; i++) { v = a * bars[i][C] + (1 - a) * v; out[i] = v; }
+    return out;
+  }
+  function atrWilder(bars, n) {
+    const out = new Array(bars.length).fill(null); if (bars.length < n) return out;
+    const tr = bars.map((b, i) => i === 0 ? b[H] - b[L] : Math.max(b[H] - b[L], Math.abs(b[H] - bars[i - 1][C]), Math.abs(b[L] - bars[i - 1][C])));
+    let v = 0; for (let i = 0; i < n; i++) v += tr[i]; v /= n; out[n - 1] = v;
+    for (let i = n; i < bars.length; i++) { v = (v * (n - 1) + tr[i]) / n; out[i] = v; }
+    return out;
+  }
+  function supertrend(bars, n, mult) {
+    const atr = atrWilder(bars, n), out = new Array(bars.length).fill(null); let prev = null;
+    for (let i = 0; i < bars.length; i++) {
+      if (atr[i] == null) continue;
+      const b = bars[i], hl2 = (b[H] + b[L]) / 2, bu = hl2 + mult * atr[i], bl = hl2 - mult * atr[i];
+      let fu = bu, fl = bl, up;
+      if (prev === null) up = false;
+      else { const pc = bars[i - 1][C]; fu = (bu < prev.fu || pc > prev.fu) ? bu : prev.fu; fl = (bl > prev.fl || pc < prev.fl) ? bl : prev.fl; up = prev.up ? !(b[C] < fl) : (b[C] > fu); }
+      prev = { up, line: up ? fl : fu, fu, fl }; out[i] = prev;
+    }
+    return out;
+  }
+  let BARSD = null, barsLoading = null;
+  const cv = $("chart"), ctx = cv.getContext("2d"), tip = $("tip");
+  const cur = { sym: "", n: 120, end: 0, hover: -1, calc: null, layout: null };
+  function loadBars() {
+    if (BARSD) return Promise.resolve(BARSD);
+    if (!barsLoading) barsLoading = fetch("data/bars.json", { cache: "no-cache" }).then((r) => { if (!r.ok) throw new Error("Chưa có data/bars.json — job chưa chạy bản mới."); return r.json(); })
+      .then((j) => { BARSD = j; return j; }).catch((err) => { $("r-lab").textContent = err.message; barsLoading = null; throw err; });
+    return barsLoading;
+  }
+  function calc(sym) {
+    const bars = BARSD.bars[sym], st = supertrend(bars, 10, 3), em = ema(bars, 10);
+    const buys = [], exits = []; let armed = false;
+    for (let i = 1; i < bars.length; i++) {
+      if (!st[i] || !st[i - 1] || em[i] == null) continue;
+      if (!st[i].up && st[i - 1].up) { exits.push(i); armed = true; }
+      else if (!st[i].up) armed = true;
+      else if (armed && bars[i][C] > em[i]) { buys.push(i); armed = false; }
+    }
+    return { bars, st, em, buys, exits };
+  }
+  function openChart(sym) { cur.sym = sym; cur.end = 0; switchTab("chart"); }
+  function renderChart() {
+    loadBars().then(() => {
+      const syms = Object.keys(BARSD.bars).sort();
+      const state = new Map(((D && D.trend) || []).map((t) => [t.symbol, t]));
+      if (!$("c-sym").options.length) $("c-sym").innerHTML = syms.map((s) => { const t = state.get(s); return `<option value="${s}">${s}${t ? (t.up ? " · xanh" : " · đỏ") : ""}</option>`; }).join("");
+      if (!cur.sym || !BARSD.bars[cur.sym]) cur.sym = syms.includes("HPG") ? "HPG" : syms[0];
+      $("c-sym").value = cur.sym;
+      cur.calc = calc(cur.sym);
+      const bars = cur.calc.bars, total = bars.length, n = cur.n === 0 ? total : Math.min(cur.n, total);
+      if (cur.end === 0 || cur.end > total) cur.end = total;
+      $("r-off").max = total - n; $("r-off").value = cur.end - n;
+      const t = state.get(cur.sym);
+      $("chartSub").textContent = `${cur.sym}${t ? ` — Supertrend ${t.up ? "xanh" : "đỏ"} từ ${dmy(t.since)}, dải ${px(t.line)}` : ""} · chạm vào nến để xem giá.`;
+      draw(n);
+      const last = bars[total - 1], s = cur.calc.st[total - 1], e = cur.calc.em[total - 1];
+      $("cstat").innerHTML = `<div class="tot" style="background:var(--strip);border-color:var(--strip-line)"><div class="k">Đóng cửa ${dmy(last[0])}</div><div class="v">${px(last[C])}</div></div>` +
+        (s ? `<div class="tot" style="background:${s.up ? "var(--sage)" : "var(--blush)"};border-color:${s.up ? "var(--sage-line)" : "var(--blush-line)"}"><div class="k">Dải Supertrend</div><div class="v">${px(s.line)}</div></div>` : "") +
+        (e != null ? `<div class="tot" style="background:var(--blue);border-color:var(--blue-line)"><div class="k">EMA10 · giá ${last[C] > e ? "trên" : "dưới"}</div><div class="v">${px(e)}</div></div>` : "");
+    }).catch(() => {});
+  }
+  function draw(n) {
+    const { bars, st, em, buys, exits } = cur.calc;
+    const dpr = window.devicePixelRatio || 1, W = cv.clientWidth, Hh = cv.clientHeight;
+    if (!W) return;
+    cv.width = W * dpr; cv.height = Hh * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const end = cur.end, start = Math.max(0, end - n);
+    const padL = 6, padR = 50, padT = 10, padB = 22, pw = W - padL - padR, ph = Hh - padT - padB;
+    let lo = Infinity, hi = -Infinity;
+    for (let i = start; i < end; i++) { lo = Math.min(lo, bars[i][L], st[i] ? st[i].line : Infinity, em[i] ?? Infinity); hi = Math.max(hi, bars[i][H], st[i] ? st[i].line : -Infinity, em[i] ?? -Infinity); }
+    const span = (hi - lo) || 1; lo -= span * .04; hi += span * .04;
+    const bw = pw / n, x = (i) => padL + (i - start + .5) * bw, y = (v) => padT + (hi - v) / (hi - lo) * ph;
+    cur.layout = { start, end, bw, padL, x, y };
+    ctx.clearRect(0, 0, W, Hh); ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, W, Hh);
+    for (let i = start; i < end; i++) if (st[i]) { ctx.fillStyle = st[i].up ? "#E3EEDF" : "#F4E6E0"; ctx.fillRect(x(i) - bw / 2, padT, bw + .5, ph); }
+    ctx.font = "10px Archivo, Arial, sans-serif"; ctx.fillStyle = "#4B5A52"; ctx.strokeStyle = "#E7E2D6"; ctx.lineWidth = 1;
+    for (let k = 0; k <= 4; k++) { const v = lo + (hi - lo) * k / 4, yy = Math.round(y(v)) + .5; ctx.beginPath(); ctx.moveTo(padL, yy); ctx.lineTo(padL + pw, yy); ctx.stroke(); ctx.textAlign = "left"; ctx.fillText(v.toFixed(2), padL + pw + 5, yy + 3); }
+    let lastM = ""; const every = n > 200 ? 3 : n > 90 ? 2 : 1; ctx.textAlign = "center";
+    for (let i = start; i < end; i++) { const ym = bars[i][0].slice(0, 7); if (ym !== lastM) { lastM = ym; const m = +ym.slice(5, 7); if ((m - 1) % every === 0) { const xx = Math.round(x(i)) + .5; ctx.strokeStyle = "#E7E2D6"; ctx.beginPath(); ctx.moveTo(xx, padT); ctx.lineTo(xx, padT + ph); ctx.stroke(); ctx.fillStyle = "#4B5A52"; ctx.fillText(m === 1 ? ym.slice(0, 4) : "T" + m, xx, Hh - 7); } } }
+    const cw = Math.max(1, bw * .66);
+    for (let i = start; i < end; i++) { const b = bars[i], col = b[C] >= b[O] ? "#2E7D4F" : "#B84A3A", xx = x(i); ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(xx, y(b[H])); ctx.lineTo(xx, y(b[L])); ctx.stroke(); const yo = y(b[O]), yc = y(b[C]), top = Math.min(yo, yc), hh = Math.max(1, Math.abs(yo - yc)); if (cw >= 3) ctx.fillRect(xx - cw / 2, top, cw, hh); else { ctx.beginPath(); ctx.moveTo(xx, top); ctx.lineTo(xx, top + hh); ctx.stroke(); } }
+    ctx.strokeStyle = "#5B6FA8"; ctx.lineWidth = 1.5; ctx.beginPath(); let pen = false;
+    for (let i = start; i < end; i++) { if (em[i] == null) { pen = false; continue; } if (!pen) { ctx.moveTo(x(i), y(em[i])); pen = true; } else ctx.lineTo(x(i), y(em[i])); }
+    ctx.stroke();
+    ctx.lineWidth = 2; let segUp = null; ctx.beginPath();
+    for (let i = start; i < end; i++) { const s = st[i]; if (!s) continue; if (segUp === null || s.up !== segUp) { if (segUp !== null) { ctx.strokeStyle = segUp ? "#2E7D4F" : "#B84A3A"; ctx.stroke(); } ctx.beginPath(); ctx.moveTo(x(i), y(s.line)); segUp = s.up; } else ctx.lineTo(x(i), y(s.line)); }
+    if (segUp !== null) { ctx.strokeStyle = segUp ? "#2E7D4F" : "#B84A3A"; ctx.stroke(); }
+    const tri = (xx, yy, upDir, col) => { ctx.fillStyle = col; ctx.beginPath(); if (upDir) { ctx.moveTo(xx, yy); ctx.lineTo(xx - 5, yy + 9); ctx.lineTo(xx + 5, yy + 9); } else { ctx.moveTo(xx, yy); ctx.lineTo(xx - 5, yy - 9); ctx.lineTo(xx + 5, yy - 9); } ctx.closePath(); ctx.fill(); };
+    for (const i of buys) if (i >= start && i < end) tri(x(i), y(bars[i][L]) + 4, true, "#1F3A2E");
+    for (const i of exits) if (i >= start && i < end) tri(x(i), y(bars[i][H]) - 4, false, "#9A3B2E");
+    if (cur.hover >= start && cur.hover < end) { const xx = Math.round(x(cur.hover)) + .5; ctx.strokeStyle = "#4B5A52"; ctx.setLineDash([3, 3]); ctx.beginPath(); ctx.moveTo(xx, padT); ctx.lineTo(xx, padT + ph); ctx.stroke(); ctx.setLineDash([]); }
+    $("r-lab").textContent = `${dmy(bars[start][0])} → ${dmy(bars[end - 1][0])} · ${end - start} phiên`;
+  }
+  function onMove(cx, cy) {
+    const Ly = cur.layout; if (!Ly || !cur.calc) return;
+    const rect = cv.getBoundingClientRect(), p = cx - rect.left, i = Math.floor((p - Ly.padL) / Ly.bw) + Ly.start;
+    if (i < Ly.start || i >= Ly.end) { cur.hover = -1; tip.style.display = "none"; draw(Ly.end - Ly.start); return; }
+    cur.hover = i;
+    const { bars, st, em, buys, exits } = cur.calc, b = bars[i], s = st[i], e = em[i];
+    tip.innerHTML = `<b>${dmy(b[0])}</b><br>M ${px(b[O])} · C ${px(b[H])} · T ${px(b[L])} · Đ <b>${px(b[C])}</b><br>KL ${(b[5] / 1e3).toFixed(0)}k` +
+      (s ? `<br><span style="color:${s.up ? "#2E7D4F" : "#B84A3A"}">Supertrend ${s.up ? "xanh" : "đỏ"} ${px(s.line)}</span>` : "") + (e != null ? `<br><span style="color:#5B6FA8">EMA10 ${px(e)}</span>` : "") +
+      (buys.includes(i) ? "<br><b>▲ Tín hiệu MUA</b>" : exits.includes(i) ? "<br><b>▼ Supertrend lật đỏ</b>" : "");
+    tip.style.display = "block";
+    const tw = tip.offsetWidth, left = p + 12 + tw > rect.width ? p - tw - 12 : p + 12;
+    tip.style.left = left + "px"; tip.style.top = Math.max(6, Math.min(cy - rect.top - 16, rect.height - tip.offsetHeight - 44)) + "px";
+    draw(Ly.end - Ly.start);
+  }
+  cv.addEventListener("mousemove", (ev) => onMove(ev.clientX, ev.clientY));
+  cv.addEventListener("mouseleave", () => { cur.hover = -1; tip.style.display = "none"; if (cur.layout && cur.calc) draw(cur.layout.end - cur.layout.start); });
+  cv.addEventListener("touchstart", (ev) => { const t = ev.touches[0]; onMove(t.clientX, t.clientY); }, { passive: true });
+  cv.addEventListener("touchmove", (ev) => { const t = ev.touches[0]; onMove(t.clientX, t.clientY); }, { passive: true });
+  $("c-sym").addEventListener("change", () => { cur.sym = $("c-sym").value; cur.end = 0; renderChart(); });
+  $("c-range").addEventListener("click", (ev) => { const b = ev.target.closest("button"); if (!b) return; cur.n = +b.dataset.n; cur.end = 0; [...$("c-range").children].forEach((x) => x.setAttribute("aria-pressed", x === b ? "true" : "false")); renderChart(); });
+  $("r-off").addEventListener("input", (ev) => { if (!cur.calc) return; const total = cur.calc.bars.length, n = cur.n === 0 ? total : Math.min(cur.n, total); cur.end = Math.min(total, +ev.target.value + n); draw(n); });
+  window.addEventListener("resize", () => { if (cur.calc && $("p-chart").classList.contains("on")) renderChart(); });
+  document.addEventListener("click", (ev) => { const el = ev.target.closest("[data-chart]"); if (!el) return; ev.preventDefault(); openChart(el.dataset.chart); });
+
   // ---------------------------------------------------------------- tab + boot
   const tabs = document.querySelectorAll('nav[role="tablist"] button');
   function switchTab(name) {
     tabs.forEach((x) => x.setAttribute("aria-selected", x.dataset.tab === name ? "true" : "false"));
     document.querySelectorAll(".panel").forEach((p) => p.classList.toggle("on", p.id === "p-" + name));
     $("main").scrollTop = 0;
+    if (name === "chart") renderChart();
   }
   tabs.forEach((b) => b.addEventListener("click", () => switchTab(b.dataset.tab)));
-  function applyHash() { const m = /^#(today|history|settings)$/.exec(location.hash); if (m) switchTab(m[1]); }
+  function applyHash() { const m = /^#(today|history|chart|settings)$/.exec(location.hash); if (m) switchTab(m[1]); }
   window.addEventListener("hashchange", applyHash);
 
   if ("serviceWorker" in navigator) navigator.serviceWorker.register(SW).catch(() => {});

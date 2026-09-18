@@ -35,7 +35,8 @@ BARS = SITE_DATA / "bars.json"
 STATE = SITE_DATA / "state.json"
 DAILY = SITE_DATA / "daily"
 
-# Số nến gửi kèm mỗi tín hiệu để giao diện vẽ mini-chart (≥ 2 nến nền + tối đa 5 nến của mẫu)
+# Số nến gửi kèm mỗi tín hiệu để giao diện vẽ mini-chart (≥ 2 nến nền + tối đa 5 nến của mẫu).
+# Thẻ mẫu nến còn nhận thêm trend.BARS_IN_CARD (22) nến có Supertrend/EMA cho biểu đồ xu hướng bên dưới.
 CANDLES_IN_CARD = 7
 # Nến ngày lấy về: 200 ngày lịch ≈ 135 phiên — Supertrend/EMA cần ≥ 40 phiên warm-up, mẫu nến cần 12.
 FETCH_DAYS = 200
@@ -121,6 +122,8 @@ def detect_signals(bars_by_symbol: dict[str, list[dict]], names: dict[str, str],
                 "pattern": pid, "name": meta["name"], "direction": meta["direction"],
                 "bars": meta["bars"], "hint": meta["hint"], "advice": meta["advice"],
                 "caution": meta.get("caution", ""), "candles": _candles_for_card(b),
+                # 22 nến kèm dải Supertrend/EMA10 — giao diện vẽ biểu đồ xu hướng ngay dưới nến mẫu
+                "trend_candles": trend.candles_for_card(b),
             })
         if thits:
             state = trend.state_at(b) or {}

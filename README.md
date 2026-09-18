@@ -145,7 +145,8 @@ Chạy tay: `run-daily-local.bat` (= `--force --no-push`), `--dry-run` chỉ in.
 ## Giao diện (docs/)
 
 Bốn tab: **Hôm nay** (thẻ xu hướng Supertrend đứng đầu, bảng 39 mã xanh/đỏ, rồi thẻ mẫu nến theo mã:
-mini-chart nến thuộc mẫu tô màu, nến xác nhận khung vàng, dòng GỢI Ý theo quy tắc cố định, XU HƯỚNG và
+mini-chart nến thuộc mẫu tô màu, nến xác nhận khung vàng, bên dưới là biểu đồ 22 phiên có dải Supertrend
+và EMA10 (`trend_candles`, cùng hàm vẽ với thẻ xu hướng), dòng GỢI Ý theo quy tắc cố định, XU HƯỚNG và
 LƯU Ý từ kết quả đo), **Lịch sử** (30 phiên, đếm xu hướng / mẫu nến riêng), **Biểu đồ** (130 phiên có
 Supertrend, EMA10, vùng xanh/đỏ, mũi tên mua/thoát, chạm xem giá), **Cài đặt** (đăng ký thông báo, 2 tín
 hiệu xu hướng + 18 mẫu với glyph, số lần/tháng và trạng thái bật/tắt).

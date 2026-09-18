@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-09-18T00:23:01+07:00",
- "trade_date": "2026-09-17",
+ "generated_at": "2026-09-18T15:41:49+07:00",
+ "trade_date": "2026-09-18",
  "watchlist": {
   "n": 39,
   "source": "kingstock"
@@ -23,224 +23,678 @@
    "direction": "buy",
    "bars": 2,
    "hint": "Nến tăng bao trọn thân nến giảm hôm trước.",
-   "caution": ""
+   "caution": "",
+   "kind": "candle"
   },
   "bear_engulfing": {
    "name": "Nhấn chìm giảm",
    "direction": "sell",
    "bars": 2,
    "hint": "Nến giảm bao trọn thân nến tăng hôm trước.",
-   "caution": ""
+   "caution": "",
+   "kind": "candle"
   },
   "morning_star": {
    "name": "Sao mai",
    "direction": "buy",
    "bars": 3,
    "hint": "Giảm mạnh → do dự → tăng, nến xác nhận đóng trên giữa thân nến giảm.",
-   "caution": ""
+   "caution": "",
+   "kind": "candle"
   },
   "evening_star": {
    "name": "Sao hôm",
    "direction": "sell",
    "bars": 3,
    "hint": "Tăng mạnh → do dự → giảm, nến xác nhận đóng dưới giữa thân nến tăng.",
-   "caution": ""
+   "caution": "",
+   "kind": "candle"
   },
   "morning_doji_star": {
    "name": "Sao mai Doji",
    "direction": "buy",
    "bars": 3,
    "hint": "Như Sao mai nhưng nến giữa là Doji thật.",
-   "caution": ""
+   "caution": "",
+   "kind": "candle"
   },
   "evening_doji_star": {
    "name": "Sao hôm Doji",
    "direction": "sell",
    "bars": 3,
    "hint": "Như Sao hôm nhưng nến giữa là Doji thật.",
-   "caution": ""
+   "caution": "",
+   "kind": "candle"
   },
   "three_white_soldiers": {
    "name": "Ba chàng lính trắng",
    "direction": "buy",
    "bars": 3,
    "hint": "Ba nến tăng thân đặc, đóng cửa cao dần, mở cửa trong thân nến trước.",
-   "caution": ""
+   "caution": "",
+   "kind": "candle"
   },
   "three_black_crows": {
    "name": "Ba con quạ đen",
    "direction": "sell",
    "bars": 3,
    "hint": "Ba nến giảm thân đặc, đóng cửa thấp dần, mở cửa trong thân nến trước.",
-   "caution": ""
+   "caution": "",
+   "kind": "candle"
   },
   "hammer_confirm": {
    "name": "Búa + xác nhận",
    "direction": "buy",
    "bars": 2,
    "hint": "Nến búa hôm trước, hôm nay nến tăng đóng cửa vượt đỉnh búa.",
-   "caution": ""
+   "caution": "",
+   "kind": "candle"
   },
   "hanging_man_confirm": {
    "name": "Người treo cổ + xác nhận",
    "direction": "sell",
    "bars": 2,
    "hint": "Nến râu dưới dài ở vùng cao, hôm nay nến giảm đóng cửa thủng đáy nó.",
-   "caution": ""
+   "caution": "",
+   "kind": "candle"
   },
   "inv_hammer_confirm": {
    "name": "Búa ngược + xác nhận",
    "direction": "buy",
    "bars": 2,
    "hint": "Nến râu trên dài hôm trước, hôm nay nến tăng đóng cửa vượt đỉnh nó.",
-   "caution": ""
+   "caution": "",
+   "kind": "candle"
   },
   "shooting_star_confirm": {
    "name": "Sao băng + xác nhận",
    "direction": "sell",
    "bars": 2,
    "hint": "Nến râu trên dài ở vùng cao, hôm nay nến giảm đóng cửa thủng đáy nó.",
-   "caution": ""
+   "caution": "",
+   "kind": "candle"
   },
   "piercing": {
    "name": "Xuyên thấu",
    "direction": "buy",
    "bars": 2,
    "hint": "Nến tăng mở thấp, đóng cửa trên giữa thân nến giảm hôm trước.",
-   "caution": ""
+   "caution": "",
+   "kind": "candle"
   },
   "dark_cloud": {
    "name": "Mây đen che phủ",
    "direction": "sell",
    "bars": 2,
    "hint": "Nến giảm mở cao, đóng cửa dưới giữa thân nến tăng hôm trước.",
-   "caution": ""
+   "caution": "",
+   "kind": "candle"
   },
   "three_inside_down": {
    "name": "Ba nến trong giảm",
    "direction": "sell",
    "bars": 3,
    "hint": "Nến giảm nhỏ nằm trong thân nến tăng (harami), rồi nến giảm thủng đáy harami.",
-   "caution": ""
+   "caution": "",
+   "kind": "candle"
   },
   "limit_up_climax": {
    "name": "Trần + bùng nổ KL + phá đỉnh",
    "direction": "buy",
    "bars": 1,
    "hint": "Đóng cửa ≥ +6,5 %, thân ≥ 2× trung bình, khối lượng ≥ 2× trung bình 20 phiên, cao nhất 20 phiên.",
-   "caution": ""
+   "caution": "",
+   "kind": "candle"
   },
   "limit_down_volume": {
    "name": "Sàn kèm KL bùng nổ (bắt đáy)",
    "direction": "buy",
    "bars": 1,
    "hint": "Đóng cửa ≤ −6,5 % với khối lượng ≥ 2× trung bình 20 phiên — bán tháo kiệt sức.",
-   "caution": "Rủi ro cao: đo 4 năm thì 2022 (cú sập) và 2024 (đi ngang) đều âm sau 10 phiên; chỉ trả tiền khi cú hoảng loạn trùng đáy thật."
+   "caution": "Rủi ro cao: đo 4 năm thì 2022 (cú sập) và 2024 (đi ngang) đều âm sau 10 phiên; chỉ trả tiền khi cú hoảng loạn trùng đáy thật.",
+   "kind": "candle"
   },
   "falling_three_methods": {
    "name": "Ba bước giảm",
    "direction": "sell",
    "bars": 5,
    "hint": "Nến giảm dài, ba nến nhỏ nằm gọn trong biên nến đó, rồi nến giảm dài thủng đáy — xu hướng giảm tiếp diễn.",
-   "caution": "Mẫu nhỏ: chỉ 22 lần trong 2 năm — theo dõi thêm, chưa đủ để tin hẳn."
+   "caution": "Đo 4 năm: 56 lần, chỉ 2026 đúng (−9,8 %); 2023–2024 giá TĂNG sau tín hiệu. Chưa có giá trị dự báo ổn định — cân nhắc tắt.",
+   "kind": "candle"
+  },
+  "st_buy": {
+   "name": "Supertrend xanh + trên EMA10",
+   "direction": "buy",
+   "bars": 1,
+   "hint": "Supertrend vừa xanh (hoặc đang xanh) và giá đóng cửa vượt EMA10 — lần đầu sau đợt đỏ.",
+   "caution": "",
+   "kind": "trend"
+  },
+  "st_exit": {
+   "name": "Supertrend lật đỏ",
+   "direction": "sell",
+   "bars": 1,
+   "hint": "Giá đóng cửa xuyên xuống dải Supertrend — xu hướng tăng đã gãy, thoát hàng.",
+   "caution": "",
+   "kind": "trend"
   }
  },
+ "trend": [
+  {
+   "symbol": "ACB",
+   "up": false,
+   "line": 23.05,
+   "since": "2026-07-31",
+   "days": 33,
+   "ema": 22.29,
+   "above_ema": false
+  },
+  {
+   "symbol": "AGR",
+   "up": false,
+   "line": 13.45,
+   "since": "2026-07-13",
+   "days": 47,
+   "ema": 12.85,
+   "above_ema": true
+  },
+  {
+   "symbol": "BID",
+   "up": true,
+   "line": 34.82,
+   "since": "2026-08-07",
+   "days": 28,
+   "ema": 36.25,
+   "above_ema": false
+  },
+  {
+   "symbol": "CEO",
+   "up": false,
+   "line": 13.19,
+   "since": "2026-09-16",
+   "days": 3,
+   "ema": 12.0,
+   "above_ema": false
+  },
+  {
+   "symbol": "CII",
+   "up": false,
+   "line": 14.33,
+   "since": "2026-05-29",
+   "days": 78,
+   "ema": 13.34,
+   "above_ema": false
+  },
+  {
+   "symbol": "CTG",
+   "up": false,
+   "line": 31.62,
+   "since": "2026-09-11",
+   "days": 6,
+   "ema": 30.73,
+   "above_ema": false
+  },
+  {
+   "symbol": "DCM",
+   "up": true,
+   "line": 31.03,
+   "since": "2026-09-03",
+   "days": 12,
+   "ema": 32.75,
+   "above_ema": true
+  },
+  {
+   "symbol": "DGC",
+   "up": false,
+   "line": 39.04,
+   "since": "2026-09-16",
+   "days": 3,
+   "ema": 36.58,
+   "above_ema": false
+  },
+  {
+   "symbol": "DPR",
+   "up": true,
+   "line": 36.56,
+   "since": "2026-08-26",
+   "days": 15,
+   "ema": 37.71,
+   "above_ema": true
+  },
+  {
+   "symbol": "DXG",
+   "up": false,
+   "line": 11.69,
+   "since": "2026-09-11",
+   "days": 6,
+   "ema": 10.94,
+   "above_ema": false
+  },
+  {
+   "symbol": "EIB",
+   "up": false,
+   "line": 17.47,
+   "since": "2026-03-16",
+   "days": 129,
+   "ema": 16.48,
+   "above_ema": false
+  },
+  {
+   "symbol": "FPT",
+   "up": true,
+   "line": 69.12,
+   "since": "2026-08-03",
+   "days": 32,
+   "ema": 72.79,
+   "above_ema": false
+  },
+  {
+   "symbol": "GAS",
+   "up": true,
+   "line": 80.79,
+   "since": "2026-08-10",
+   "days": 27,
+   "ema": 86.84,
+   "above_ema": true
+  },
+  {
+   "symbol": "GMD",
+   "up": true,
+   "line": 74.58,
+   "since": "2026-07-16",
+   "days": 44,
+   "ema": 76.47,
+   "above_ema": true
+  },
+  {
+   "symbol": "GVR",
+   "up": true,
+   "line": 29.92,
+   "since": "2026-08-07",
+   "days": 28,
+   "ema": 31.58,
+   "above_ema": true
+  },
+  {
+   "symbol": "HCM",
+   "up": true,
+   "line": 24.67,
+   "since": "2026-07-17",
+   "days": 43,
+   "ema": 25.52,
+   "above_ema": false
+  },
+  {
+   "symbol": "HPG",
+   "up": true,
+   "line": 20.84,
+   "since": "2026-08-03",
+   "days": 32,
+   "ema": 21.4,
+   "above_ema": true
+  },
+  {
+   "symbol": "KBC",
+   "up": false,
+   "line": 27.41,
+   "since": "2026-05-19",
+   "days": 86,
+   "ema": 26.43,
+   "above_ema": false
+  },
+  {
+   "symbol": "LPB",
+   "up": false,
+   "line": 50.93,
+   "since": "2026-08-18",
+   "days": 21,
+   "ema": 47.79,
+   "above_ema": true
+  },
+  {
+   "symbol": "MBB",
+   "up": false,
+   "line": 20.85,
+   "since": "2026-09-11",
+   "days": 6,
+   "ema": 20.17,
+   "above_ema": false
+  },
+  {
+   "symbol": "MBS",
+   "up": false,
+   "line": 18.09,
+   "since": "2026-07-20",
+   "days": 42,
+   "ema": 16.9,
+   "above_ema": true
+  },
+  {
+   "symbol": "MSB",
+   "up": false,
+   "line": 13.45,
+   "since": "2026-08-26",
+   "days": 15,
+   "ema": 12.94,
+   "above_ema": false
+  },
+  {
+   "symbol": "PLX",
+   "up": true,
+   "line": 34.58,
+   "since": "2026-08-07",
+   "days": 28,
+   "ema": 36.82,
+   "above_ema": true
+  },
+  {
+   "symbol": "PVD",
+   "up": false,
+   "line": 19.81,
+   "since": "2026-07-22",
+   "days": 40,
+   "ema": 19.13,
+   "above_ema": true
+  },
+  {
+   "symbol": "PVS",
+   "up": true,
+   "line": 29.51,
+   "since": "2026-08-24",
+   "days": 17,
+   "ema": 32.95,
+   "above_ema": true
+  },
+  {
+   "symbol": "SHB",
+   "up": false,
+   "line": 12.19,
+   "since": "2026-03-16",
+   "days": 129,
+   "ema": 11.68,
+   "above_ema": true
+  },
+  {
+   "symbol": "SHS",
+   "up": false,
+   "line": 15.81,
+   "since": "2026-07-15",
+   "days": 45,
+   "ema": 14.52,
+   "above_ema": false
+  },
+  {
+   "symbol": "SSI",
+   "up": true,
+   "line": 19.8,
+   "since": "2026-08-21",
+   "days": 18,
+   "ema": 20.87,
+   "above_ema": true
+  },
+  {
+   "symbol": "STB",
+   "up": true,
+   "line": 72.53,
+   "since": "2026-06-26",
+   "days": 58,
+   "ema": 76.55,
+   "above_ema": true
+  },
+  {
+   "symbol": "SZC",
+   "up": true,
+   "line": 17.53,
+   "since": "2026-08-07",
+   "days": 28,
+   "ema": 17.99,
+   "above_ema": false
+  },
+  {
+   "symbol": "TCB",
+   "up": true,
+   "line": 31.32,
+   "since": "2026-08-10",
+   "days": 27,
+   "ema": 32.14,
+   "above_ema": false
+  },
+  {
+   "symbol": "TCH",
+   "up": true,
+   "line": 10.96,
+   "since": "2026-08-24",
+   "days": 17,
+   "ema": 11.74,
+   "above_ema": true
+  },
+  {
+   "symbol": "TPB",
+   "up": false,
+   "line": 14.86,
+   "since": "2026-07-13",
+   "days": 47,
+   "ema": 14.21,
+   "above_ema": false
+  },
+  {
+   "symbol": "VCB",
+   "up": true,
+   "line": 57.07,
+   "since": "2026-07-31",
+   "days": 33,
+   "ema": 59.25,
+   "above_ema": true
+  },
+  {
+   "symbol": "VCI",
+   "up": false,
+   "line": 21.86,
+   "since": "2026-09-11",
+   "days": 6,
+   "ema": 20.51,
+   "above_ema": true
+  },
+  {
+   "symbol": "VDS",
+   "up": false,
+   "line": 11.81,
+   "since": "2026-07-15",
+   "days": 45,
+   "ema": 11.09,
+   "above_ema": false
+  },
+  {
+   "symbol": "VIB",
+   "up": false,
+   "line": 13.87,
+   "since": "2026-07-13",
+   "days": 47,
+   "ema": 13.53,
+   "above_ema": true
+  },
+  {
+   "symbol": "VIX",
+   "up": false,
+   "line": 14.43,
+   "since": "2026-09-14",
+   "days": 5,
+   "ema": 13.16,
+   "above_ema": false
+  },
+  {
+   "symbol": "VPB",
+   "up": true,
+   "line": 26.07,
+   "since": "2026-08-26",
+   "days": 15,
+   "ema": 27.44,
+   "above_ema": true
+  }
+ ],
  "stale": [],
  "signals": [
   {
-   "symbol": "AGR",
-   "company_name": "Công ty Cổ phần Chứng khoán Agribank",
-   "pattern": "bull_engulfing",
-   "name": "Nhấn chìm tăng",
+   "symbol": "STB",
+   "company_name": "Ngân hàng TMCP Sài Gòn Tài Lộc",
+   "price": 78.2,
+   "change_pct": 2.62,
+   "volume": 5077900,
+   "kind": "candle",
+   "pattern": "inv_hammer_confirm",
+   "name": "Búa ngược + xác nhận",
    "direction": "buy",
    "bars": 2,
-   "hint": "Nến tăng bao trọn thân nến giảm hôm trước.",
-   "advice": "Canh mua phiên sau; dừng lỗ dưới đáy nến nhấn chìm.",
+   "hint": "Nến râu trên dài hôm trước, hôm nay nến tăng đóng cửa vượt đỉnh nó.",
+   "advice": "Canh mua phiên sau; dừng lỗ dưới đáy nến búa ngược.",
    "caution": "",
-   "price": 12.9,
-   "change_pct": 2.38,
-   "volume": 336700,
    "candles": [
     {
-     "d": "2026-09-09",
-     "o": 13.05,
-     "h": 13.1,
-     "l": 12.85,
-     "c": 12.85,
-     "v": 104200
-    },
-    {
      "d": "2026-09-10",
-     "o": 12.95,
-     "h": 13.0,
-     "l": 12.8,
-     "c": 13.0,
-     "v": 118900
+     "o": 76.7,
+     "h": 79.0,
+     "l": 76.7,
+     "c": 78.0,
+     "v": 3168900
     },
     {
      "d": "2026-09-11",
-     "o": 12.85,
-     "h": 12.95,
-     "l": 12.65,
-     "c": 12.65,
-     "v": 250900
+     "o": 78.2,
+     "h": 79.0,
+     "l": 77.2,
+     "c": 77.3,
+     "v": 8252800
     },
     {
      "d": "2026-09-14",
-     "o": 12.65,
-     "h": 12.75,
-     "l": 12.35,
-     "c": 12.65,
-     "v": 239100
+     "o": 77.3,
+     "h": 77.9,
+     "l": 75.8,
+     "c": 76.4,
+     "v": 2531100
     },
     {
      "d": "2026-09-15",
-     "o": 12.75,
-     "h": 12.75,
-     "l": 12.6,
-     "c": 12.65,
-     "v": 213200
+     "o": 76.7,
+     "h": 77.0,
+     "l": 75.8,
+     "c": 76.0,
+     "v": 2216700
     },
     {
      "d": "2026-09-16",
-     "o": 12.65,
-     "h": 12.8,
-     "l": 12.55,
-     "c": 12.6,
-     "v": 119200
+     "o": 76.3,
+     "h": 76.9,
+     "l": 75.6,
+     "c": 75.8,
+     "v": 2318100
     },
     {
      "d": "2026-09-17",
-     "o": 12.6,
-     "h": 13.15,
-     "l": 12.5,
-     "c": 12.9,
-     "v": 336700
+     "o": 75.8,
+     "h": 77.1,
+     "l": 75.7,
+     "c": 76.2,
+     "v": 2555400
+    },
+    {
+     "d": "2026-09-18",
+     "o": 76.5,
+     "h": 78.2,
+     "l": 76.2,
+     "c": 78.2,
+     "v": 5077900
+    }
+   ]
+  },
+  {
+   "symbol": "ACB",
+   "company_name": "Ngân hàng Thương mại Cổ phần Á Châu",
+   "price": 21.9,
+   "change_pct": -3.95,
+   "volume": 10475900,
+   "kind": "candle",
+   "pattern": "bear_engulfing",
+   "name": "Nhấn chìm giảm",
+   "direction": "sell",
+   "bars": 2,
+   "hint": "Nến giảm bao trọn thân nến tăng hôm trước.",
+   "advice": "Đang giữ thì cân nhắc hạ tỷ trọng đầu phiên sau.",
+   "caution": "",
+   "candles": [
+    {
+     "d": "2026-09-10",
+     "o": 22.45,
+     "h": 22.5,
+     "l": 22.35,
+     "c": 22.4,
+     "v": 3925600
+    },
+    {
+     "d": "2026-09-11",
+     "o": 22.3,
+     "h": 22.35,
+     "l": 22.0,
+     "c": 22.05,
+     "v": 8653100
+    },
+    {
+     "d": "2026-09-14",
+     "o": 22.05,
+     "h": 22.15,
+     "l": 21.95,
+     "c": 22.05,
+     "v": 5907500
+    },
+    {
+     "d": "2026-09-15",
+     "o": 22.2,
+     "h": 22.3,
+     "l": 22.0,
+     "c": 22.1,
+     "v": 6877300
+    },
+    {
+     "d": "2026-09-16",
+     "o": 22.1,
+     "h": 22.6,
+     "l": 22.05,
+     "c": 22.6,
+     "v": 8017800
+    },
+    {
+     "d": "2026-09-17",
+     "o": 22.45,
+     "h": 22.8,
+     "l": 22.35,
+     "c": 22.8,
+     "v": 9239200
+    },
+    {
+     "d": "2026-09-18",
+     "o": 22.8,
+     "h": 22.85,
+     "l": 21.9,
+     "c": 21.9,
+     "v": 10475900
     }
    ]
   },
   {
    "symbol": "BID",
    "company_name": "Ngân hàng Thương mại Cổ phần Đầu tư và Phát triển Việt Nam ",
-   "pattern": "piercing",
-   "name": "Xuyên thấu",
-   "direction": "buy",
+   "price": 35.75,
+   "change_pct": -2.59,
+   "volume": 12526600,
+   "kind": "candle",
+   "pattern": "bear_engulfing",
+   "name": "Nhấn chìm giảm",
+   "direction": "sell",
    "bars": 2,
-   "hint": "Nến tăng mở thấp, đóng cửa trên giữa thân nến giảm hôm trước.",
-   "advice": "Yếu hơn nhấn chìm — chờ thêm một nến tăng nữa rồi mới vào.",
+   "hint": "Nến giảm bao trọn thân nến tăng hôm trước.",
+   "advice": "Đang giữ thì cân nhắc hạ tỷ trọng đầu phiên sau.",
    "caution": "",
-   "price": 36.7,
-   "change_pct": 0.96,
-   "volume": 3397000,
    "candles": [
-    {
-     "d": "2026-09-09",
-     "o": 36.2,
-     "h": 36.7,
-     "l": 36.15,
-     "c": 36.4,
-     "v": 2459100
-    },
     {
      "d": "2026-09-10",
      "o": 36.4,
@@ -288,823 +742,251 @@
      "l": 36.15,
      "c": 36.7,
      "v": 3397000
+    },
+    {
+     "d": "2026-09-18",
+     "o": 36.85,
+     "h": 37.85,
+     "l": 35.75,
+     "c": 35.75,
+     "v": 12526600
     }
    ]
   },
   {
-   "symbol": "CEO",
-   "company_name": "Công ty Cổ phần Tập Đoàn C.E.O",
-   "pattern": "piercing",
-   "name": "Xuyên thấu",
-   "direction": "buy",
+   "symbol": "CTG",
+   "company_name": "Ngân hàng Thương mại Cổ phần Công Thương Việt Nam",
+   "price": 30.25,
+   "change_pct": -3.66,
+   "volume": 14170000,
+   "kind": "candle",
+   "pattern": "bear_engulfing",
+   "name": "Nhấn chìm giảm",
+   "direction": "sell",
    "bars": 2,
-   "hint": "Nến tăng mở thấp, đóng cửa trên giữa thân nến giảm hôm trước.",
-   "advice": "Yếu hơn nhấn chìm — chờ thêm một nến tăng nữa rồi mới vào.",
+   "hint": "Nến giảm bao trọn thân nến tăng hôm trước.",
+   "advice": "Đang giữ thì cân nhắc hạ tỷ trọng đầu phiên sau.",
    "caution": "",
-   "price": 11.8,
-   "change_pct": 2.61,
-   "volume": 4734900,
    "candles": [
     {
-     "d": "2026-09-09",
-     "o": 12.9,
-     "h": 13.0,
-     "l": 12.6,
-     "c": 12.6,
-     "v": 3678000
-    },
-    {
      "d": "2026-09-10",
-     "o": 12.6,
-     "h": 12.7,
-     "l": 12.5,
-     "c": 12.6,
-     "v": 2515900
+     "o": 30.65,
+     "h": 30.7,
+     "l": 30.5,
+     "c": 30.55,
+     "v": 6515200
     },
     {
      "d": "2026-09-11",
-     "o": 12.6,
-     "h": 12.6,
-     "l": 11.9,
-     "c": 11.9,
-     "v": 9125300
+     "o": 30.45,
+     "h": 30.5,
+     "l": 29.9,
+     "c": 29.95,
+     "v": 11049200
     },
     {
      "d": "2026-09-14",
-     "o": 11.9,
-     "h": 12.0,
-     "l": 11.5,
-     "c": 11.6,
-     "v": 5249700
+     "o": 30.0,
+     "h": 30.25,
+     "l": 29.7,
+     "c": 29.85,
+     "v": 8579100
     },
     {
      "d": "2026-09-15",
-     "o": 11.6,
-     "h": 11.9,
-     "l": 11.5,
-     "c": 11.8,
-     "v": 3842700
+     "o": 30.0,
+     "h": 30.65,
+     "l": 30.0,
+     "c": 30.55,
+     "v": 7704000
     },
     {
      "d": "2026-09-16",
-     "o": 11.9,
-     "h": 11.9,
-     "l": 11.5,
-     "c": 11.5,
-     "v": 4080800
+     "o": 30.65,
+     "h": 30.85,
+     "l": 30.2,
+     "c": 30.85,
+     "v": 4346000
     },
     {
      "d": "2026-09-17",
-     "o": 11.5,
-     "h": 12.1,
-     "l": 11.4,
-     "c": 11.8,
-     "v": 4734900
+     "o": 30.4,
+     "h": 31.4,
+     "l": 30.35,
+     "c": 31.4,
+     "v": 11251200
+    },
+    {
+     "d": "2026-09-18",
+     "o": 31.4,
+     "h": 31.7,
+     "l": 30.25,
+     "c": 30.25,
+     "v": 14170000
     }
    ]
   },
   {
-   "symbol": "CII",
-   "company_name": "Công ty Cổ phần Đầu tư Hạ tầng Kỹ thuật Thành phố Hồ Chí Minh ",
-   "pattern": "piercing",
-   "name": "Xuyên thấu",
-   "direction": "buy",
+   "symbol": "FPT",
+   "company_name": "Công ty Cổ phần FPT",
+   "price": 71.7,
+   "change_pct": -3.5,
+   "volume": 15500700,
+   "kind": "candle",
+   "pattern": "bear_engulfing",
+   "name": "Nhấn chìm giảm",
+   "direction": "sell",
    "bars": 2,
-   "hint": "Nến tăng mở thấp, đóng cửa trên giữa thân nến giảm hôm trước.",
-   "advice": "Yếu hơn nhấn chìm — chờ thêm một nến tăng nữa rồi mới vào.",
+   "hint": "Nến giảm bao trọn thân nến tăng hôm trước.",
+   "advice": "Đang giữ thì cân nhắc hạ tỷ trọng đầu phiên sau.",
    "caution": "",
-   "price": 12.85,
-   "change_pct": 1.18,
-   "volume": 8061900,
    "candles": [
     {
-     "d": "2026-09-09",
-     "o": 14.4,
-     "h": 14.7,
-     "l": 14.3,
-     "c": 14.35,
-     "v": 7616900
-    },
-    {
      "d": "2026-09-10",
-     "o": 14.35,
-     "h": 14.4,
-     "l": 14.05,
-     "c": 14.05,
-     "v": 7914800
+     "o": 72.3,
+     "h": 74.8,
+     "l": 72.2,
+     "c": 74.5,
+     "v": 11936600
     },
     {
      "d": "2026-09-11",
-     "o": 14.05,
-     "h": 14.05,
-     "l": 13.25,
-     "c": 13.25,
-     "v": 15173200
+     "o": 74.4,
+     "h": 74.4,
+     "l": 72.7,
+     "c": 72.7,
+     "v": 5655200
     },
     {
      "d": "2026-09-14",
-     "o": 13.35,
-     "h": 13.45,
-     "l": 12.75,
-     "c": 12.95,
-     "v": 11136800
+     "o": 72.8,
+     "h": 73.6,
+     "l": 72.0,
+     "c": 72.4,
+     "v": 4860300
     },
     {
      "d": "2026-09-15",
-     "o": 13.0,
-     "h": 13.15,
-     "l": 12.85,
-     "c": 12.95,
-     "v": 6652800
+     "o": 72.7,
+     "h": 73.4,
+     "l": 72.5,
+     "c": 72.7,
+     "v": 3977500
     },
     {
      "d": "2026-09-16",
-     "o": 12.95,
-     "h": 13.0,
-     "l": 12.55,
-     "c": 12.7,
-     "v": 8909100
+     "o": 72.8,
+     "h": 73.8,
+     "l": 71.5,
+     "c": 73.8,
+     "v": 7748100
     },
     {
      "d": "2026-09-17",
-     "o": 12.6,
-     "h": 13.15,
-     "l": 12.55,
-     "c": 12.85,
-     "v": 8061900
+     "o": 73.3,
+     "h": 74.3,
+     "l": 72.6,
+     "c": 74.3,
+     "v": 6626700
+    },
+    {
+     "d": "2026-09-18",
+     "o": 74.5,
+     "h": 74.8,
+     "l": 71.7,
+     "c": 71.7,
+     "v": 15500700
     }
    ]
   },
   {
-   "symbol": "DXG",
-   "company_name": "Công ty Cổ phần Bluemarq Group",
-   "pattern": "bull_engulfing",
-   "name": "Nhấn chìm tăng",
-   "direction": "buy",
+   "symbol": "MBB",
+   "company_name": "Ngân hàng Thương mại Cổ phần Quân đội ",
+   "price": 19.9,
+   "change_pct": -3.16,
+   "volume": 16843700,
+   "kind": "candle",
+   "pattern": "bear_engulfing",
+   "name": "Nhấn chìm giảm",
+   "direction": "sell",
    "bars": 2,
-   "hint": "Nến tăng bao trọn thân nến giảm hôm trước.",
-   "advice": "Canh mua phiên sau; dừng lỗ dưới đáy nến nhấn chìm.",
+   "hint": "Nến giảm bao trọn thân nến tăng hôm trước.",
+   "advice": "Đang giữ thì cân nhắc hạ tỷ trọng đầu phiên sau.",
    "caution": "",
-   "price": 10.8,
-   "change_pct": 2.37,
-   "volume": 14399100,
    "candles": [
     {
-     "d": "2026-09-09",
-     "o": 11.35,
-     "h": 11.45,
-     "l": 11.1,
-     "c": 11.3,
-     "v": 10703400
-    },
-    {
      "d": "2026-09-10",
-     "o": 11.2,
-     "h": 11.35,
-     "l": 11.1,
-     "c": 11.25,
-     "v": 7339600
+     "o": 20.2,
+     "h": 20.25,
+     "l": 20.05,
+     "c": 20.1,
+     "v": 6900700
     },
     {
      "d": "2026-09-11",
-     "o": 11.1,
-     "h": 11.15,
-     "l": 10.7,
-     "c": 10.75,
-     "v": 15177400
+     "o": 20.0,
+     "h": 20.05,
+     "l": 19.75,
+     "c": 19.75,
+     "v": 18351700
     },
     {
      "d": "2026-09-14",
-     "o": 10.65,
-     "h": 10.9,
-     "l": 10.5,
-     "c": 10.75,
-     "v": 7583500
+     "o": 19.75,
+     "h": 19.95,
+     "l": 19.6,
+     "c": 19.7,
+     "v": 16345400
     },
     {
      "d": "2026-09-15",
-     "o": 10.75,
-     "h": 10.85,
-     "l": 10.6,
-     "c": 10.75,
-     "v": 5332600
+     "o": 19.75,
+     "h": 20.15,
+     "l": 19.75,
+     "c": 20.0,
+     "v": 15925500
     },
     {
      "d": "2026-09-16",
-     "o": 10.6,
-     "h": 10.7,
-     "l": 10.3,
-     "c": 10.55,
-     "v": 10689800
-    },
-    {
-     "d": "2026-09-17",
-     "o": 10.3,
-     "h": 11.2,
-     "l": 10.3,
-     "c": 10.8,
-     "v": 14399100
-    }
-   ]
-  },
-  {
-   "symbol": "HCM",
-   "company_name": "Công ty Cổ phần Chứng khoán Thành phố Hồ Chí Minh",
-   "pattern": "bull_engulfing",
-   "name": "Nhấn chìm tăng",
-   "direction": "buy",
-   "bars": 2,
-   "hint": "Nến tăng bao trọn thân nến giảm hôm trước.",
-   "advice": "Canh mua phiên sau; dừng lỗ dưới đáy nến nhấn chìm.",
-   "caution": "",
-   "price": 25.3,
-   "change_pct": 1.61,
-   "volume": 3614500,
-   "candles": [
-    {
-     "d": "2026-09-09",
-     "o": 26.6,
-     "h": 26.7,
-     "l": 26.2,
-     "c": 26.35,
-     "v": 2455500
-    },
-    {
-     "d": "2026-09-10",
-     "o": 26.2,
-     "h": 26.45,
-     "l": 26.05,
-     "c": 26.3,
-     "v": 2621700
-    },
-    {
-     "d": "2026-09-11",
-     "o": 26.1,
-     "h": 26.2,
-     "l": 25.0,
-     "c": 25.5,
-     "v": 5841200
-    },
-    {
-     "d": "2026-09-14",
-     "o": 25.2,
-     "h": 25.5,
-     "l": 24.65,
-     "c": 24.75,
-     "v": 4303400
-    },
-    {
-     "d": "2026-09-15",
-     "o": 24.8,
-     "h": 25.3,
-     "l": 24.75,
-     "c": 25.15,
-     "v": 2214900
-    },
-    {
-     "d": "2026-09-16",
-     "o": 25.25,
-     "h": 25.25,
-     "l": 24.7,
-     "c": 24.9,
-     "v": 3072800
-    },
-    {
-     "d": "2026-09-17",
-     "o": 24.7,
-     "h": 25.9,
-     "l": 24.2,
-     "c": 25.3,
-     "v": 3614500
-    }
-   ]
-  },
-  {
-   "symbol": "HPG",
-   "company_name": "Công ty Cổ phần Tập đoàn Hòa Phát",
-   "pattern": "bull_engulfing",
-   "name": "Nhấn chìm tăng",
-   "direction": "buy",
-   "bars": 2,
-   "hint": "Nến tăng bao trọn thân nến giảm hôm trước.",
-   "advice": "Canh mua phiên sau; dừng lỗ dưới đáy nến nhấn chìm.",
-   "caution": "",
-   "price": 21.2,
-   "change_pct": 1.19,
-   "volume": 17574100,
-   "candles": [
-    {
-     "d": "2026-09-09",
-     "o": 21.9,
-     "h": 22.2,
-     "l": 21.85,
-     "c": 22.05,
-     "v": 22432800
-    },
-    {
-     "d": "2026-09-10",
-     "o": 22.0,
-     "h": 22.05,
-     "l": 21.8,
-     "c": 21.85,
-     "v": 13391400
-    },
-    {
-     "d": "2026-09-11",
-     "o": 21.75,
-     "h": 21.8,
-     "l": 21.3,
-     "c": 21.3,
-     "v": 22031700
-    },
-    {
-     "d": "2026-09-14",
-     "o": 21.3,
-     "h": 21.4,
-     "l": 20.85,
-     "c": 20.9,
-     "v": 24046000
-    },
-    {
-     "d": "2026-09-15",
-     "o": 21.0,
-     "h": 21.2,
-     "l": 21.0,
-     "c": 21.2,
-     "v": 11937200
-    },
-    {
-     "d": "2026-09-16",
-     "o": 21.2,
-     "h": 21.25,
-     "l": 20.95,
-     "c": 20.95,
-     "v": 12277500
-    },
-    {
-     "d": "2026-09-17",
-     "o": 20.8,
-     "h": 21.4,
-     "l": 20.75,
-     "c": 21.2,
-     "v": 17574100
-    }
-   ]
-  },
-  {
-   "symbol": "LPB",
-   "company_name": "Ngân hàng Thương mại cổ phần Lộc Phát Việt Nam ",
-   "pattern": "piercing",
-   "name": "Xuyên thấu",
-   "direction": "buy",
-   "bars": 2,
-   "hint": "Nến tăng mở thấp, đóng cửa trên giữa thân nến giảm hôm trước.",
-   "advice": "Yếu hơn nhấn chìm — chờ thêm một nến tăng nữa rồi mới vào.",
-   "caution": "",
-   "price": 47.5,
-   "change_pct": 2.04,
-   "volume": 2877200,
-   "candles": [
-    {
-     "d": "2026-09-09",
-     "o": 49.15,
-     "h": 49.2,
-     "l": 48.05,
-     "c": 48.15,
-     "v": 2145700
-    },
-    {
-     "d": "2026-09-10",
-     "o": 48.15,
-     "h": 48.55,
-     "l": 47.3,
-     "c": 48.15,
-     "v": 2421000
-    },
-    {
-     "d": "2026-09-11",
-     "o": 48.0,
-     "h": 48.0,
-     "l": 46.5,
-     "c": 46.7,
-     "v": 2241800
-    },
-    {
-     "d": "2026-09-14",
-     "o": 46.75,
-     "h": 47.25,
-     "l": 45.7,
-     "c": 46.0,
-     "v": 2221000
-    },
-    {
-     "d": "2026-09-15",
-     "o": 46.15,
-     "h": 47.9,
-     "l": 46.15,
-     "c": 47.5,
-     "v": 1992500
-    },
-    {
-     "d": "2026-09-16",
-     "o": 47.75,
-     "h": 47.75,
-     "l": 46.1,
-     "c": 46.55,
-     "v": 2598300
-    },
-    {
-     "d": "2026-09-17",
-     "o": 46.2,
-     "h": 47.5,
-     "l": 46.2,
-     "c": 47.5,
-     "v": 2877200
-    }
-   ]
-  },
-  {
-   "symbol": "MBS",
-   "company_name": "Công ty Cổ phần chứng khoán MB",
-   "pattern": "bull_engulfing",
-   "name": "Nhấn chìm tăng",
-   "direction": "buy",
-   "bars": 2,
-   "hint": "Nến tăng bao trọn thân nến giảm hôm trước.",
-   "advice": "Canh mua phiên sau; dừng lỗ dưới đáy nến nhấn chìm.",
-   "caution": "",
-   "price": 16.8,
-   "change_pct": 2.44,
-   "volume": 3397200,
-   "candles": [
-    {
-     "d": "2026-09-09",
-     "o": 17.4,
-     "h": 17.4,
-     "l": 17.1,
-     "c": 17.1,
-     "v": 2206500
-    },
-    {
-     "d": "2026-09-10",
-     "o": 17.0,
-     "h": 17.3,
-     "l": 17.0,
-     "c": 17.1,
-     "v": 2000900
-    },
-    {
-     "d": "2026-09-11",
-     "o": 17.1,
-     "h": 17.2,
-     "l": 16.4,
-     "c": 16.5,
-     "v": 5954600
-    },
-    {
-     "d": "2026-09-14",
-     "o": 16.5,
-     "h": 16.8,
-     "l": 16.0,
-     "c": 16.4,
-     "v": 3684400
-    },
-    {
-     "d": "2026-09-15",
-     "o": 16.4,
-     "h": 16.7,
-     "l": 16.1,
-     "c": 16.6,
-     "v": 1843600
-    },
-    {
-     "d": "2026-09-16",
-     "o": 16.6,
-     "h": 16.6,
-     "l": 16.3,
-     "c": 16.4,
-     "v": 2053100
-    },
-    {
-     "d": "2026-09-17",
-     "o": 16.4,
-     "h": 17.2,
-     "l": 16.1,
-     "c": 16.8,
-     "v": 3397200
-    }
-   ]
-  },
-  {
-   "symbol": "MSB",
-   "company_name": "Ngân hàng Thương mại Cổ phần Hàng Hải Việt Nam",
-   "pattern": "hammer_confirm",
-   "name": "Búa + xác nhận",
-   "direction": "buy",
-   "bars": 2,
-   "hint": "Nến búa hôm trước, hôm nay nến tăng đóng cửa vượt đỉnh búa.",
-   "advice": "Canh mua phiên sau; điểm dừng lỗ tự nhiên là đáy râu búa.",
-   "caution": "",
-   "price": 12.9,
-   "change_pct": 0.39,
-   "volume": 2672500,
-   "candles": [
-    {
-     "d": "2026-09-09",
-     "o": 13.1,
-     "h": 13.15,
-     "l": 12.9,
-     "c": 12.9,
-     "v": 2260700
-    },
-    {
-     "d": "2026-09-10",
-     "o": 12.85,
-     "h": 13.0,
-     "l": 12.7,
-     "c": 12.95,
-     "v": 1922400
-    },
-    {
-     "d": "2026-09-11",
-     "o": 12.85,
-     "h": 13.05,
-     "l": 12.75,
-     "c": 12.95,
-     "v": 3471500
-    },
-    {
-     "d": "2026-09-14",
-     "o": 12.8,
-     "h": 12.95,
-     "l": 12.7,
-     "c": 12.8,
-     "v": 2413100
-    },
-    {
-     "d": "2026-09-15",
-     "o": 12.8,
-     "h": 12.9,
-     "l": 12.65,
-     "c": 12.8,
-     "v": 2244600
-    },
-    {
-     "d": "2026-09-16",
-     "o": 12.85,
-     "h": 12.85,
-     "l": 12.75,
-     "c": 12.85,
-     "v": 1031500
-    },
-    {
-     "d": "2026-09-17",
-     "o": 12.8,
-     "h": 13.0,
-     "l": 12.8,
-     "c": 12.9,
-     "v": 2672500
-    }
-   ]
-  },
-  {
-   "symbol": "SHS",
-   "company_name": "Công ty Cổ phần Chứng khoán Sài Gòn Hà Nội ",
-   "pattern": "bull_engulfing",
-   "name": "Nhấn chìm tăng",
-   "direction": "buy",
-   "bars": 2,
-   "hint": "Nến tăng bao trọn thân nến giảm hôm trước.",
-   "advice": "Canh mua phiên sau; dừng lỗ dưới đáy nến nhấn chìm.",
-   "caution": "",
-   "price": 14.3,
-   "change_pct": 2.14,
-   "volume": 11920800,
-   "candles": [
-    {
-     "d": "2026-09-09",
-     "o": 15.2,
-     "h": 15.2,
-     "l": 14.8,
-     "c": 14.9,
-     "v": 6441600
-    },
-    {
-     "d": "2026-09-10",
-     "o": 15.0,
-     "h": 15.1,
-     "l": 14.7,
-     "c": 14.9,
-     "v": 6099100
-    },
-    {
-     "d": "2026-09-11",
-     "o": 14.9,
-     "h": 14.9,
-     "l": 14.2,
-     "c": 14.3,
-     "v": 13436500
-    },
-    {
-     "d": "2026-09-14",
-     "o": 14.1,
-     "h": 14.5,
-     "l": 13.7,
-     "c": 14.0,
-     "v": 10651000
-    },
-    {
-     "d": "2026-09-15",
-     "o": 14.0,
-     "h": 14.4,
-     "l": 13.8,
-     "c": 14.2,
-     "v": 5766400
-    },
-    {
-     "d": "2026-09-16",
-     "o": 14.2,
-     "h": 14.3,
-     "l": 13.9,
-     "c": 14.0,
-     "v": 4066600
-    },
-    {
-     "d": "2026-09-17",
-     "o": 13.8,
-     "h": 14.8,
-     "l": 13.7,
-     "c": 14.3,
-     "v": 11920800
-    }
-   ]
-  },
-  {
-   "symbol": "SSI",
-   "company_name": "Công ty Cổ phần chứng khoán SSI",
-   "pattern": "bull_engulfing",
-   "name": "Nhấn chìm tăng",
-   "direction": "buy",
-   "bars": 2,
-   "hint": "Nến tăng bao trọn thân nến giảm hôm trước.",
-   "advice": "Canh mua phiên sau; dừng lỗ dưới đáy nến nhấn chìm.",
-   "caution": "",
-   "price": 21.15,
-   "change_pct": 2.92,
-   "volume": 40967600,
-   "candles": [
-    {
-     "d": "2026-09-09",
-     "o": 21.05,
-     "h": 21.15,
-     "l": 20.85,
-     "c": 20.9,
-     "v": 9488000
-    },
-    {
-     "d": "2026-09-10",
-     "o": 20.85,
-     "h": 21.2,
-     "l": 20.7,
-     "c": 21.0,
-     "v": 12807500
-    },
-    {
-     "d": "2026-09-11",
-     "o": 20.85,
-     "h": 20.95,
-     "l": 20.3,
+     "o": 20.05,
+     "h": 20.3,
+     "l": 20.0,
      "c": 20.3,
-     "v": 24010700
+     "v": 9098600
     },
     {
-     "d": "2026-09-14",
-     "o": 20.25,
-     "h": 20.4,
-     "l": 19.7,
-     "c": 20.3,
-     "v": 24518000
-    },
-    {
-     "d": "2026-09-15",
-     "o": 20.3,
-     "h": 20.75,
-     "l": 20.25,
-     "c": 20.65,
-     "v": 16404500
-    },
-    {
-     "d": "2026-09-16",
-     "o": 20.65,
-     "h": 20.65,
-     "l": 20.3,
+     "d": "2026-09-17",
+     "o": 20.15,
+     "h": 20.55,
+     "l": 20.1,
      "c": 20.55,
-     "v": 13947800
+     "v": 16498200
     },
     {
-     "d": "2026-09-17",
-     "o": 20.4,
-     "h": 21.6,
-     "l": 20.35,
-     "c": 21.15,
-     "v": 40967600
-    }
-   ]
-  },
-  {
-   "symbol": "SSI",
-   "company_name": "Công ty Cổ phần chứng khoán SSI",
-   "pattern": "hammer_confirm",
-   "name": "Búa + xác nhận",
-   "direction": "buy",
-   "bars": 2,
-   "hint": "Nến búa hôm trước, hôm nay nến tăng đóng cửa vượt đỉnh búa.",
-   "advice": "Canh mua phiên sau; điểm dừng lỗ tự nhiên là đáy râu búa.",
-   "caution": "",
-   "price": 21.15,
-   "change_pct": 2.92,
-   "volume": 40967600,
-   "candles": [
-    {
-     "d": "2026-09-09",
-     "o": 21.05,
-     "h": 21.15,
-     "l": 20.85,
-     "c": 20.9,
-     "v": 9488000
-    },
-    {
-     "d": "2026-09-10",
-     "o": 20.85,
-     "h": 21.2,
-     "l": 20.7,
-     "c": 21.0,
-     "v": 12807500
-    },
-    {
-     "d": "2026-09-11",
-     "o": 20.85,
-     "h": 20.95,
-     "l": 20.3,
-     "c": 20.3,
-     "v": 24010700
-    },
-    {
-     "d": "2026-09-14",
-     "o": 20.25,
-     "h": 20.4,
-     "l": 19.7,
-     "c": 20.3,
-     "v": 24518000
-    },
-    {
-     "d": "2026-09-15",
-     "o": 20.3,
-     "h": 20.75,
-     "l": 20.25,
-     "c": 20.65,
-     "v": 16404500
-    },
-    {
-     "d": "2026-09-16",
-     "o": 20.65,
-     "h": 20.65,
-     "l": 20.3,
-     "c": 20.55,
-     "v": 13947800
-    },
-    {
-     "d": "2026-09-17",
-     "o": 20.4,
-     "h": 21.6,
-     "l": 20.35,
-     "c": 21.15,
-     "v": 40967600
+     "d": "2026-09-18",
+     "o": 20.55,
+     "h": 20.6,
+     "l": 19.9,
+     "c": 19.9,
+     "v": 16843700
     }
    ]
   },
   {
    "symbol": "TCB",
    "company_name": "Ngân hàng Thương mại Cổ phần Kỹ Thương Việt Nam - Techcombank",
-   "pattern": "hammer_confirm",
-   "name": "Búa + xác nhận",
-   "direction": "buy",
+   "price": 31.6,
+   "change_pct": -3.22,
+   "volume": 15676600,
+   "kind": "candle",
+   "pattern": "bear_engulfing",
+   "name": "Nhấn chìm giảm",
+   "direction": "sell",
    "bars": 2,
-   "hint": "Nến búa hôm trước, hôm nay nến tăng đóng cửa vượt đỉnh búa.",
-   "advice": "Canh mua phiên sau; điểm dừng lỗ tự nhiên là đáy râu búa.",
+   "hint": "Nến giảm bao trọn thân nến tăng hôm trước.",
+   "advice": "Đang giữ thì cân nhắc hạ tỷ trọng đầu phiên sau.",
    "caution": "",
-   "price": 32.65,
-   "change_pct": 0.62,
-   "volume": 12488900,
    "candles": [
-    {
-     "d": "2026-09-09",
-     "o": 32.0,
-     "h": 32.7,
-     "l": 32.0,
-     "c": 32.4,
-     "v": 10974600
-    },
     {
      "d": "2026-09-10",
      "o": 32.2,
@@ -1152,175 +1034,32 @@
      "l": 32.2,
      "c": 32.65,
      "v": 12488900
-    }
-   ]
-  },
-  {
-   "symbol": "TCH",
-   "company_name": "Công ty Cổ phần Đầu tư Dịch vụ Tài chính Hoàng Huy",
-   "pattern": "bull_engulfing",
-   "name": "Nhấn chìm tăng",
-   "direction": "buy",
-   "bars": 2,
-   "hint": "Nến tăng bao trọn thân nến giảm hôm trước.",
-   "advice": "Canh mua phiên sau; dừng lỗ dưới đáy nến nhấn chìm.",
-   "caution": "",
-   "price": 11.7,
-   "change_pct": 3.54,
-   "volume": 5531800,
-   "candles": [
-    {
-     "d": "2026-09-09",
-     "o": 12.15,
-     "h": 12.4,
-     "l": 12.05,
-     "c": 12.2,
-     "v": 4808600
     },
     {
-     "d": "2026-09-10",
-     "o": 12.2,
-     "h": 12.35,
-     "l": 12.1,
-     "c": 12.1,
-     "v": 3641200
-    },
-    {
-     "d": "2026-09-11",
-     "o": 12.0,
-     "h": 12.05,
-     "l": 11.5,
-     "c": 11.7,
-     "v": 9850000
-    },
-    {
-     "d": "2026-09-14",
-     "o": 11.5,
-     "h": 11.7,
-     "l": 11.2,
-     "c": 11.45,
-     "v": 4690100
-    },
-    {
-     "d": "2026-09-15",
-     "o": 11.4,
-     "h": 11.65,
-     "l": 11.4,
-     "c": 11.6,
-     "v": 2971900
-    },
-    {
-     "d": "2026-09-16",
-     "o": 11.5,
-     "h": 11.6,
-     "l": 11.25,
-     "c": 11.3,
-     "v": 5009100
-    },
-    {
-     "d": "2026-09-17",
-     "o": 11.25,
-     "h": 11.95,
-     "l": 11.2,
-     "c": 11.7,
-     "v": 5531800
-    }
-   ]
-  },
-  {
-   "symbol": "VCI",
-   "company_name": "Công ty Cổ phần Chứng khoán Vietcap",
-   "pattern": "bull_engulfing",
-   "name": "Nhấn chìm tăng",
-   "direction": "buy",
-   "bars": 2,
-   "hint": "Nến tăng bao trọn thân nến giảm hôm trước.",
-   "advice": "Canh mua phiên sau; dừng lỗ dưới đáy nến nhấn chìm.",
-   "caution": "",
-   "price": 20.0,
-   "change_pct": 3.9,
-   "volume": 18343400,
-   "candles": [
-    {
-     "d": "2026-09-09",
-     "o": 21.7,
-     "h": 21.75,
-     "l": 21.2,
-     "c": 21.2,
-     "v": 7442100
-    },
-    {
-     "d": "2026-09-10",
-     "o": 21.1,
-     "h": 21.6,
-     "l": 21.0,
-     "c": 21.3,
-     "v": 4738000
-    },
-    {
-     "d": "2026-09-11",
-     "o": 21.15,
-     "h": 21.15,
-     "l": 20.0,
-     "c": 20.05,
-     "v": 18681700
-    },
-    {
-     "d": "2026-09-14",
-     "o": 20.0,
-     "h": 20.2,
-     "l": 19.45,
-     "c": 19.6,
-     "v": 13099900
-    },
-    {
-     "d": "2026-09-15",
-     "o": 19.75,
-     "h": 20.2,
-     "l": 19.75,
-     "c": 19.8,
-     "v": 6922100
-    },
-    {
-     "d": "2026-09-16",
-     "o": 19.9,
-     "h": 20.1,
-     "l": 19.25,
-     "c": 19.25,
-     "v": 8853200
-    },
-    {
-     "d": "2026-09-17",
-     "o": 19.2,
-     "h": 20.55,
-     "l": 19.15,
-     "c": 20.0,
-     "v": 18343400
+     "d": "2026-09-18",
+     "o": 32.8,
+     "h": 33.0,
+     "l": 31.6,
+     "c": 31.6,
+     "v": 15676600
     }
    ]
   },
   {
    "symbol": "VPB",
    "company_name": "Ngân hàng Thương mại Cổ phần Việt Nam Thịnh Vượng",
-   "pattern": "bull_engulfing",
-   "name": "Nhấn chìm tăng",
-   "direction": "buy",
+   "price": 27.45,
+   "change_pct": -2.66,
+   "volume": 49102400,
+   "kind": "candle",
+   "pattern": "dark_cloud",
+   "name": "Mây đen che phủ",
+   "direction": "sell",
    "bars": 2,
-   "hint": "Nến tăng bao trọn thân nến giảm hôm trước.",
-   "advice": "Canh mua phiên sau; dừng lỗ dưới đáy nến nhấn chìm.",
+   "hint": "Nến giảm mở cao, đóng cửa dưới giữa thân nến tăng hôm trước.",
+   "advice": "Yếu hơn nhấn chìm — đang giữ thì siết dừng lỗ lên dưới đáy nến này.",
    "caution": "",
-   "price": 28.2,
-   "change_pct": 2.17,
-   "volume": 31764100,
    "candles": [
-    {
-     "d": "2026-09-09",
-     "o": 27.35,
-     "h": 27.55,
-     "l": 27.25,
-     "c": 27.4,
-     "v": 11247800
-    },
     {
      "d": "2026-09-10",
      "o": 27.3,
@@ -1368,234 +1107,55 @@
      "l": 27.35,
      "c": 28.2,
      "v": 31764100
-    }
-   ]
-  },
-  {
-   "symbol": "PVD",
-   "company_name": "Tổng Công ty Cổ phần Khoan và Dịch vụ khoan dầu khí",
-   "pattern": "evening_star",
-   "name": "Sao hôm",
-   "direction": "sell",
-   "bars": 3,
-   "hint": "Tăng mạnh → do dự → giảm, nến xác nhận đóng dưới giữa thân nến tăng.",
-   "advice": "Đang giữ thì cân nhắc chốt bớt; đỉnh nến giữa là mốc vô hiệu.",
-   "caution": "",
-   "price": 19.25,
-   "change_pct": -2.28,
-   "volume": 9521800,
-   "candles": [
-    {
-     "d": "2026-09-09",
-     "o": 18.85,
-     "h": 19.2,
-     "l": 18.6,
-     "c": 18.65,
-     "v": 3488900
     },
     {
-     "d": "2026-09-10",
-     "o": 18.8,
-     "h": 18.95,
-     "l": 18.45,
-     "c": 18.5,
-     "v": 4406600
-    },
-    {
-     "d": "2026-09-11",
-     "o": 18.8,
-     "h": 19.35,
-     "l": 18.55,
-     "c": 18.55,
-     "v": 10322000
-    },
-    {
-     "d": "2026-09-14",
-     "o": 18.55,
-     "h": 19.1,
-     "l": 18.4,
-     "c": 18.95,
-     "v": 5875300
-    },
-    {
-     "d": "2026-09-15",
-     "o": 18.95,
-     "h": 19.95,
-     "l": 18.8,
-     "c": 19.65,
-     "v": 12989700
-    },
-    {
-     "d": "2026-09-16",
-     "o": 19.85,
-     "h": 20.4,
-     "l": 19.65,
-     "c": 19.7,
-     "v": 11482600
-    },
-    {
-     "d": "2026-09-17",
-     "o": 19.4,
-     "h": 19.8,
-     "l": 19.05,
-     "c": 19.25,
-     "v": 9521800
-    }
-   ]
-  },
-  {
-   "symbol": "PVD",
-   "company_name": "Tổng Công ty Cổ phần Khoan và Dịch vụ khoan dầu khí",
-   "pattern": "shooting_star_confirm",
-   "name": "Sao băng + xác nhận",
-   "direction": "sell",
-   "bars": 2,
-   "hint": "Nến râu trên dài ở vùng cao, hôm nay nến giảm đóng cửa thủng đáy nó.",
-   "advice": "Đang giữ thì cân nhắc thoát; đỉnh râu sao băng là mốc vô hiệu.",
-   "caution": "",
-   "price": 19.25,
-   "change_pct": -2.28,
-   "volume": 9521800,
-   "candles": [
-    {
-     "d": "2026-09-09",
-     "o": 18.85,
-     "h": 19.2,
-     "l": 18.6,
-     "c": 18.65,
-     "v": 3488900
-    },
-    {
-     "d": "2026-09-10",
-     "o": 18.8,
-     "h": 18.95,
-     "l": 18.45,
-     "c": 18.5,
-     "v": 4406600
-    },
-    {
-     "d": "2026-09-11",
-     "o": 18.8,
-     "h": 19.35,
-     "l": 18.55,
-     "c": 18.55,
-     "v": 10322000
-    },
-    {
-     "d": "2026-09-14",
-     "o": 18.55,
-     "h": 19.1,
-     "l": 18.4,
-     "c": 18.95,
-     "v": 5875300
-    },
-    {
-     "d": "2026-09-15",
-     "o": 18.95,
-     "h": 19.95,
-     "l": 18.8,
-     "c": 19.65,
-     "v": 12989700
-    },
-    {
-     "d": "2026-09-16",
-     "o": 19.85,
-     "h": 20.4,
-     "l": 19.65,
-     "c": 19.7,
-     "v": 11482600
-    },
-    {
-     "d": "2026-09-17",
-     "o": 19.4,
-     "h": 19.8,
-     "l": 19.05,
-     "c": 19.25,
-     "v": 9521800
-    }
-   ]
-  },
-  {
-   "symbol": "PVS",
-   "company_name": "Tổng Công ty Cổ phần Dịch vụ Kỹ thuật Dầu khí Việt Nam",
-   "pattern": "shooting_star_confirm",
-   "name": "Sao băng + xác nhận",
-   "direction": "sell",
-   "bars": 2,
-   "hint": "Nến râu trên dài ở vùng cao, hôm nay nến giảm đóng cửa thủng đáy nó.",
-   "advice": "Đang giữ thì cân nhắc thoát; đỉnh râu sao băng là mốc vô hiệu.",
-   "caution": "",
-   "price": 33.3,
-   "change_pct": -2.92,
-   "volume": 5857400,
-   "candles": [
-    {
-     "d": "2026-09-09",
-     "o": 32.42,
-     "h": 34.0,
-     "l": 32.0,
-     "c": 32.0,
-     "v": 2531000
-    },
-    {
-     "d": "2026-09-10",
-     "o": 32.08,
-     "h": 32.75,
-     "l": 31.83,
-     "c": 32.25,
-     "v": 1813100
-    },
-    {
-     "d": "2026-09-11",
-     "o": 32.25,
-     "h": 33.0,
-     "l": 31.92,
-     "c": 32.0,
-     "v": 5551800
-    },
-    {
-     "d": "2026-09-14",
-     "o": 28.9,
-     "h": 34.0,
-     "l": 28.9,
-     "c": 32.6,
-     "v": 3681700
-    },
-    {
-     "d": "2026-09-15",
-     "o": 33.6,
-     "h": 34.4,
-     "l": 32.0,
-     "c": 34.2,
-     "v": 8111800
-    },
-    {
-     "d": "2026-09-16",
-     "o": 34.2,
-     "h": 35.3,
-     "l": 34.1,
-     "c": 34.3,
-     "v": 5568000
-    },
-    {
-     "d": "2026-09-17",
-     "o": 34.0,
-     "h": 34.3,
-     "l": 33.0,
-     "c": 33.3,
-     "v": 5857400
+     "d": "2026-09-18",
+     "o": 28.3,
+     "h": 29.05,
+     "l": 27.45,
+     "c": 27.45,
+     "v": 49102400
     }
    ]
   }
  ],
  "push": {
-  "skipped": true
+  "source": "fallback",
+  "n_devices": 1,
+  "sent": 1,
+  "gone": 0,
+  "failed": 0,
+  "errors": [],
+  "mode": "digest",
+  "n_symbols": 8,
+  "n_trend": 0
  },
  "history": [
+  {
+   "date": "2026-09-18",
+   "n_buy": 1,
+   "n_sell": 7,
+   "n_trend_buy": 0,
+   "n_trend_exit": 0,
+   "items": [
+    "STB Búa ngược + xác nhận",
+    "ACB Nhấn chìm giảm",
+    "BID Nhấn chìm giảm",
+    "CTG Nhấn chìm giảm",
+    "FPT Nhấn chìm giảm",
+    "MBB Nhấn chìm giảm",
+    "TCB Nhấn chìm giảm",
+    "VPB Mây đen che phủ"
+   ],
+   "trend_items": [],
+   "late": false
+  },
   {
    "date": "2026-09-17",
    "n_buy": 17,
    "n_sell": 3,
+   "n_trend_buy": 0,
+   "n_trend_exit": 0,
    "items": [
     "AGR Nhấn chìm tăng",
     "BID Xuyên thấu",
@@ -1618,12 +1178,15 @@
     "PVD Sao băng + xác nhận",
     "PVS Sao băng + xác nhận"
    ],
+   "trend_items": [],
    "late": false
   },
   {
    "date": "2026-09-16",
    "n_buy": 1,
    "n_sell": 13,
+   "n_trend_buy": 0,
+   "n_trend_exit": 0,
    "items": [
     "ACB Nhấn chìm tăng",
     "CEO Nhấn chìm giảm",
@@ -1640,6 +1203,7 @@
     "VCI Sao băng + xác nhận",
     "VIX Nhấn chìm giảm"
    ],
+   "trend_items": [],
    "late": false
   }
  ]

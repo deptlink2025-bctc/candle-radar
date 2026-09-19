@@ -137,14 +137,22 @@ def state_at(bars: list[dict], i: int = -1) -> dict | None:
 
 
 def candles_for_card(bars: list[dict], i: int = -1, n: int = BARS_IN_CARD) -> list[dict]:
-    """n nến tới nến i, kèm dải Supertrend/màu/EMA từng nến để giao diện vẽ đường."""
+    """n nến tới nến i, kèm dải Supertrend/màu/EMA từng nến để giao diện vẽ đường, và `sig`
+    ("buy" / "exit" / None) — cùng quy tắc detect_at, tính trên toàn chuỗi nên đúng cả ở đầu cửa sổ —
+    để vẽ mũi tên mua/thoát trên biểu đồ trong thẻ."""
     if i < 0:
         i += len(bars)
     st, em = supertrend(bars), ema(bars)
     out = []
     for j in range(max(0, i - n + 1), i + 1):
         b = bars[j]
+        sig = None
+        if j >= WARMUP and st[j] and st[j - 1] and em[j] is not None:
+            if not st[j]["up"] and st[j - 1]["up"]:
+                sig = "exit"
+            elif st[j]["up"] and b["c"] > em[j] and _armed(st, em, bars, j):
+                sig = "buy"
         out.append({"d": b["d"].isoformat(), "o": b["o"], "h": b["h"], "l": b["l"], "c": b["c"], "v": b["v"],
                     "st": round(st[j]["line"], 2) if st[j] else None, "up": st[j]["up"] if st[j] else None,
-                    "ema": round(em[j], 2) if em[j] is not None else None})
+                    "ema": round(em[j], 2) if em[j] is not None else None, "sig": sig})
     return out

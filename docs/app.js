@@ -102,7 +102,8 @@
     const n = cs.length; if (!n) return "";
     const vals = cs.flatMap((c) => [c.h, c.l, c.st, c.ema]).filter((v) => v != null);
     const hi = Math.max(...vals), lo = Math.min(...vals), span = (hi - lo) || 1;
-    const top = 5, bottom = H - 7, y = (v) => bottom - (v - lo) / span * (bottom - top);
+    const pad = !thin && cs.some((c) => c.sig) ? 8 : 0;   // chừa chỗ cho mũi tên trên/dưới nến
+    const top = 5 + pad, bottom = H - 7 - pad, y = (v) => bottom - (v - lo) / span * (bottom - top);
     const slot = W / n, bw = Math.max(2, Math.min(8, slot * 0.55));
     let out = "";
     if (bands) cs.forEach((c, i) => { if (c.up != null) out += `<rect x="${(slot * i).toFixed(1)}" y="0" width="${(slot + 0.5).toFixed(1)}" height="${H - 3}" fill="${c.up ? "#E3EEDF" : "#F4E6E0"}"></rect>`; });
@@ -120,6 +121,13 @@
     const flush = () => { if (seg.length) out += `<polyline points="${seg.join(" ")}" fill="none" stroke="${segUp ? "#2E7D4F" : "#B84A3A"}" stroke-width="${thin ? 1.6 : 2.2}" stroke-linejoin="round"></polyline>`; seg = []; };
     cs.forEach((c, i) => { if (c.st == null) return; if (segUp !== null && c.up !== segUp) flush(); segUp = c.up; seg.push(`${(slot * i + slot / 2).toFixed(1)},${y(c.st).toFixed(1)}`); });
     flush();
+    // Mũi tên tín hiệu (job tính sẵn `sig`): ▲ MUA dưới nến, ▼ lật đỏ trên nến — cùng màu tab Biểu đồ
+    if (!thin) cs.forEach((c, i) => {
+      if (!c.sig) return;
+      const cx = slot * i + slot / 2, hw = Math.min(5, slot * 0.6);
+      if (c.sig === "buy") { const t = y(c.l) + 3; out += `<polygon points="${cx},${t} ${cx - hw},${t + 7} ${cx + hw},${t + 7}" fill="#1F3A2E"></polygon>`; }
+      else { const t = y(c.h) - 3; out += `<polygon points="${cx},${t} ${cx - hw},${t - 7} ${cx + hw},${t - 7}" fill="#9A3B2E"></polygon>`; }
+    });
     return out;
   }
   // Chuỗi mẫu vẽ glyph hai tín hiệu ở tab Cài đặt: [o,h,l,c,st,up,ema]
@@ -192,7 +200,7 @@
       // (cùng hàm vẽ với thẻ xu hướng). latest.json cũ chưa có trend_candles thì bỏ qua, thẻ hiện như cũ.
       const tc = s.trend_candles || [];
       const wide = tc.length ? `<div class="chart wide"><svg viewBox="0 0 300 72" preserveAspectRatio="none" aria-hidden="true">${trendChart(tc, 300, 72, false, true)}</svg>
-          <div class="legend"><span class="st">Supertrend</span><span class="ema">EMA10</span><span class="bg">Nền xanh/đỏ = màu Supertrend</span><span>${tc.length} phiên</span></div></div>` : "";
+          <div class="legend"><span class="st">Supertrend</span><span class="ema">EMA10</span><span class="bg">Nền = màu Supertrend</span><span class="tri">▲ mua · ▼ lật đỏ</span><span>${tc.length} phiên</span></div></div>` : "";
       i += 1;
       return `<div class="card ${dirs.size > 1 ? "sell" : buy ? "buy" : "sell"}">
         <div class="top"><div class="num">${pad2(i)}</div><h3>${esc(sym)} · ${esc(s.name)}</h3>${chip}</div>

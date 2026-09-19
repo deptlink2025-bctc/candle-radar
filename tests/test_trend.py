@@ -91,3 +91,13 @@ def test_state_va_candles_cho_the():
     assert s["since"] == b[len(b) - s["days"]]["d"].isoformat()
     cs = trend.candles_for_card(b)
     assert len(cs) == trend.BARS_IN_CARD and cs[-1]["up"] is True and cs[-1]["st"] == s["line"]
+
+
+def test_sig_trong_candles_khop_detect_at():
+    b = rising(60) + [bar(159, 159, 140, 141, 60)] + _green_after_red(20)[-20:]
+    cs = trend.candles_for_card(b, n=len(b))
+    want = {"st_buy": "buy", "st_exit": "exit"}
+    for j, c in enumerate(cs):
+        hits = trend.detect_at(b, j)
+        assert c["sig"] == (want[hits[0]] if hits else None), f"phiên {j}: {c['sig']} ≠ {hits}"
+    assert any(c["sig"] == "exit" for c in cs)

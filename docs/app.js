@@ -96,14 +96,17 @@
 
   // ---------------------------------------------------------------- xu hướng: mini-chart có đường
   /* Nến kèm dải Supertrend (xanh/đỏ, ngắt đoạn khi đổi màu) và EMA10; nến cuối khung vàng.
-     `cs` là candles của tín hiệu xu hướng: {o,h,l,c,st,up,ema}. */
-  function trendChart(cs, W, H, thin) {
+     `cs` là candles của tín hiệu xu hướng: {o,h,l,c,st,up,ema}.
+     `bands` = tô nền từng nến theo màu Supertrend (cùng màu tab Biểu đồ) — dùng cho ô rộng trong thẻ. */
+  function trendChart(cs, W, H, thin, bands) {
     const n = cs.length; if (!n) return "";
     const vals = cs.flatMap((c) => [c.h, c.l, c.st, c.ema]).filter((v) => v != null);
     const hi = Math.max(...vals), lo = Math.min(...vals), span = (hi - lo) || 1;
     const top = 5, bottom = H - 7, y = (v) => bottom - (v - lo) / span * (bottom - top);
     const slot = W / n, bw = Math.max(2, Math.min(8, slot * 0.55));
-    let out = `<line x1="0" y1="${H - 3}" x2="${W}" y2="${H - 3}" stroke="#D9D3C3" stroke-width="1"></line>`;
+    let out = "";
+    if (bands) cs.forEach((c, i) => { if (c.up != null) out += `<rect x="${(slot * i).toFixed(1)}" y="0" width="${(slot + 0.5).toFixed(1)}" height="${H - 3}" fill="${c.up ? "#E3EEDF" : "#F4E6E0"}"></rect>`; });
+    out += `<line x1="0" y1="${H - 3}" x2="${W}" y2="${H - 3}" stroke="#D9D3C3" stroke-width="1"></line>`;
     cs.forEach((c, i) => {
       const cx = slot * i + slot / 2, col = c.c >= c.o ? "#2E7D4F" : "#B84A3A";
       const yo = y(c.o), yc = y(c.c), bt = Math.min(yo, yc), bh = Math.max(1.2, Math.abs(yo - yc));
@@ -185,11 +188,11 @@
       const tr = state.get(sym);
       // Dòng XU HƯỚNG: mẫu MUA khi Supertrend đỏ là mua ngược xu hướng — nói thẳng để người dùng tự cân nhắc
       const trLine = tr ? `<div class="${tr.up ? "a" : "c"}"><span>Xu hướng</span><span>Supertrend ${tr.up ? "xanh" : "đỏ"} từ ${dmy(tr.since)} (${tr.days} phiên)${buy && !tr.up ? " — mẫu MUA ngược xu hướng, cân nhắc bỏ qua" : ""} · <a href="#chart" data-chart="${esc(sym)}">biểu đồ</a></span></div>` : "";
-      // Ô biểu đồ rộng dưới nến mẫu: 32 phiên có dải Supertrend/EMA10 (cùng hàm vẽ với thẻ xu hướng).
-      // latest.json cũ chưa có trend_candles thì bỏ qua, thẻ hiện như cũ.
+      // Ô biểu đồ rộng dưới nến mẫu: 46 phiên có dải Supertrend/EMA10, nền tô xanh/đỏ theo Supertrend
+      // (cùng hàm vẽ với thẻ xu hướng). latest.json cũ chưa có trend_candles thì bỏ qua, thẻ hiện như cũ.
       const tc = s.trend_candles || [];
-      const wide = tc.length ? `<div class="chart wide"><svg viewBox="0 0 300 72" preserveAspectRatio="none" aria-hidden="true">${trendChart(tc, 300, 72, false)}</svg>
-          <div class="legend"><span class="st">Supertrend</span><span class="ema">EMA10</span><span>${tc.length} phiên</span></div></div>` : "";
+      const wide = tc.length ? `<div class="chart wide"><svg viewBox="0 0 300 72" preserveAspectRatio="none" aria-hidden="true">${trendChart(tc, 300, 72, false, true)}</svg>
+          <div class="legend"><span class="st">Supertrend</span><span class="ema">EMA10</span><span class="bg">Nền xanh/đỏ = màu Supertrend</span><span>${tc.length} phiên</span></div></div>` : "";
       i += 1;
       return `<div class="card ${dirs.size > 1 ? "sell" : buy ? "buy" : "sell"}">
         <div class="top"><div class="num">${pad2(i)}</div><h3>${esc(sym)} · ${esc(s.name)}</h3>${chip}</div>

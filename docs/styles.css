@@ -70,6 +70,8 @@ main { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-bot
 .legend span::before { content: ""; display: inline-block; width: 12px; height: 2px; vertical-align: middle; margin-right: 5px; background: var(--line); }
 .legend .st::before { background: var(--up); }
 .legend .ema::before { background: #5B6FA8; }
+.legend .bg::before { width: 12px; height: 9px; border-radius: 2px; background: linear-gradient(90deg, #E3EEDF 50%, #F4E6E0 50%); border: 1px solid var(--line); }
+.legend { flex-wrap: wrap; gap: 6px 12px; }
 .px { display: flex; flex-direction: column; gap: 3px; flex: 1; }
 .px .k { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--mute); }
 .px .v { font-size: 24px; font-weight: 900; line-height: 1; }

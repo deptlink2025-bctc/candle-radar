@@ -38,8 +38,8 @@ DAILY = SITE_DATA / "daily"
 # Số nến gửi kèm mỗi tín hiệu để giao diện vẽ mini-chart (≥ 2 nến nền + tối đa 5 nến của mẫu).
 CANDLES_IN_CARD = 7
 # Nến xu hướng (có Supertrend/EMA) gửi kèm thẻ mẫu nến cho ô biểu đồ rộng bên dưới nến mẫu.
-# Ô này svg 300 px nên chứa được 32 nến; thẻ xu hướng svg 132 px giữ trend.BARS_IN_CARD (22).
-TREND_CANDLES_IN_CARD = 32
+# Ô này svg 300 px nên chứa được 46 nến; thẻ xu hướng svg 132 px giữ trend.BARS_IN_CARD (22).
+TREND_CANDLES_IN_CARD = 46
 # Nến ngày lấy về: 200 ngày lịch ≈ 135 phiên — Supertrend/EMA cần ≥ 40 phiên warm-up, mẫu nến cần 12.
 FETCH_DAYS = 200
 # Số nến mỗi mã ghi vào docs/data/bars.json cho tab Biểu đồ (≈ 300 KB cho 39 mã, ghi đè mỗi ngày).
@@ -124,7 +124,7 @@ def detect_signals(bars_by_symbol: dict[str, list[dict]], names: dict[str, str],
                 "pattern": pid, "name": meta["name"], "direction": meta["direction"],
                 "bars": meta["bars"], "hint": meta["hint"], "advice": meta["advice"],
                 "caution": meta.get("caution", ""), "candles": _candles_for_card(b),
-                # 32 nến kèm dải Supertrend/EMA10 — giao diện vẽ biểu đồ xu hướng ngay dưới nến mẫu
+                # 46 nến kèm dải Supertrend/EMA10 — giao diện vẽ biểu đồ xu hướng ngay dưới nến mẫu
                 "trend_candles": trend.candles_for_card(b, n=TREND_CANDLES_IN_CARD),
             })
         if thits:

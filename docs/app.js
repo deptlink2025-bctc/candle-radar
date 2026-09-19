@@ -185,7 +185,7 @@
       const tr = state.get(sym);
       // Dòng XU HƯỚNG: mẫu MUA khi Supertrend đỏ là mua ngược xu hướng — nói thẳng để người dùng tự cân nhắc
       const trLine = tr ? `<div class="${tr.up ? "a" : "c"}"><span>Xu hướng</span><span>Supertrend ${tr.up ? "xanh" : "đỏ"} từ ${dmy(tr.since)} (${tr.days} phiên)${buy && !tr.up ? " — mẫu MUA ngược xu hướng, cân nhắc bỏ qua" : ""} · <a href="#chart" data-chart="${esc(sym)}">biểu đồ</a></span></div>` : "";
-      // Ô biểu đồ rộng dưới nến mẫu: 22 phiên có dải Supertrend/EMA10 (cùng hàm vẽ với thẻ xu hướng).
+      // Ô biểu đồ rộng dưới nến mẫu: 32 phiên có dải Supertrend/EMA10 (cùng hàm vẽ với thẻ xu hướng).
       // latest.json cũ chưa có trend_candles thì bỏ qua, thẻ hiện như cũ.
       const tc = s.trend_candles || [];
       const wide = tc.length ? `<div class="chart wide"><svg viewBox="0 0 300 72" preserveAspectRatio="none" aria-hidden="true">${trendChart(tc, 300, 72, false)}</svg>

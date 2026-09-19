@@ -53,7 +53,7 @@ def test_detect_signals_bo_qua_ma_nen_cu():
     assert signals[0]["pattern"] == "bull_engulfing" and signals[0]["name"] == PATTERNS["bull_engulfing"]["name"]
     assert len(signals[0]["candles"]) == rd.CANDLES_IN_CARD
     tc = signals[0]["trend_candles"]
-    assert 0 < len(tc) <= rd.trend.BARS_IN_CARD and all({"st", "up", "ema"} <= set(c) for c in tc)
+    assert 0 < len(tc) <= rd.TREND_CANDLES_IN_CARD and all({"st", "up", "ema"} <= set(c) for c in tc)
     assert stale == [{"symbol": "IDP", "last_date": "2026-09-07"}]
 
 

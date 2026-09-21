@@ -1,6 +1,6 @@
 {
- "last_run": "2026-09-18T15:41:49+07:00",
- "last_trade_date": "2026-09-18",
+ "last_run": "2026-09-21T15:42:05+07:00",
+ "last_trade_date": "2026-09-21",
  "dnse_error": "",
  "push": {
   "source": "fallback",
@@ -10,8 +10,9 @@
   "failed": 0,
   "errors": [],
   "mode": "digest",
-  "n_symbols": 8,
-  "n_trend": 0
+  "n_symbols": 11,
+  "n_trend": 0,
+  "heartbeat": 1
  },
  "watchlist": {
   "n": 39,
@@ -21,7 +22,7 @@
   "n": 1,
   "source": "fallback",
   "vapid": true,
-  "checked_at": "2026-09-19T11:23:34+07:00"
+  "checked_at": "2026-09-21T15:42:05+07:00"
  },
  "welcome": {
   "at": "2026-09-17T18:47:51+07:00",

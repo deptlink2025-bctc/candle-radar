@@ -11,10 +11,10 @@
   "source": "kingstock"
  },
  "devices": {
-  "n": 0,
-  "source": "none",
+  "n": 1,
+  "source": "fallback",
   "vapid": true,
-  "checked_at": "2026-10-15T19:01:20+07:00"
+  "checked_at": "2026-10-15T19:02:18+07:00"
  },
  "welcome": {
   "at": "2026-09-17T18:47:51+07:00",
